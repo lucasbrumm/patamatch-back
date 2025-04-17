@@ -38,16 +38,51 @@ export class UsersService {
     });
   }
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto) {
+    console.log(createUserDto);
+    const existingUser = await this.prisma.user.findUnique({
+      where: { email: createUserDto.email },
+    });
+    if (existingUser) {
+      throw new Error('User already exists');
+    }
+
+    const user = await this.prisma.user.create({
+      data: createUserDto,
+    });
+
+    return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findById(id: number) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const user = await this.prisma.user.findUnique({
+      where: { id },
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const allowedFields = ['name', 'password'] as const;
+    const filteredData = Object.fromEntries(
+      Object.entries(updateUserDto).filter(([key]) =>
+        allowedFields.includes(key as (typeof allowedFields)[number]),
+      ),
+    );
+
+    return this.prisma.user.update({
+      where: { id },
+      data: filteredData,
+    });
   }
 
   remove(id: number) {
