@@ -128,7 +128,12 @@ exports.Prisma.PostScalarFieldEnum = {
   title: 'title',
   content: 'content',
   published: 'published',
-  authorId: 'authorId'
+  postType: 'postType',
+  imageUrl: 'imageUrl',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  authorId: 'authorId',
+  dogId: 'dogId'
 };
 
 exports.Prisma.DogScalarFieldEnum = {

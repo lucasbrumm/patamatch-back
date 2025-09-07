@@ -1087,6 +1087,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type DogCountOutputType
+   */
+
+  export type DogCountOutputType = {
+    posts: number
+  }
+
+  export type DogCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    posts?: boolean | DogCountOutputTypeCountPostsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DogCountOutputType
+     */
+    select?: DogCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DogCountOutputType without action
+   */
+  export type DogCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2211,11 +2242,13 @@ export namespace Prisma {
   export type PostAvgAggregateOutputType = {
     id: number | null
     authorId: number | null
+    dogId: number | null
   }
 
   export type PostSumAggregateOutputType = {
     id: number | null
     authorId: number | null
+    dogId: number | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -2223,7 +2256,12 @@ export namespace Prisma {
     title: string | null
     content: string | null
     published: boolean | null
+    postType: string | null
+    imageUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
     authorId: number | null
+    dogId: number | null
   }
 
   export type PostMaxAggregateOutputType = {
@@ -2231,7 +2269,12 @@ export namespace Prisma {
     title: string | null
     content: string | null
     published: boolean | null
+    postType: string | null
+    imageUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
     authorId: number | null
+    dogId: number | null
   }
 
   export type PostCountAggregateOutputType = {
@@ -2239,7 +2282,12 @@ export namespace Prisma {
     title: number
     content: number
     published: number
+    postType: number
+    imageUrl: number
+    createdAt: number
+    updatedAt: number
     authorId: number
+    dogId: number
     _all: number
   }
 
@@ -2247,11 +2295,13 @@ export namespace Prisma {
   export type PostAvgAggregateInputType = {
     id?: true
     authorId?: true
+    dogId?: true
   }
 
   export type PostSumAggregateInputType = {
     id?: true
     authorId?: true
+    dogId?: true
   }
 
   export type PostMinAggregateInputType = {
@@ -2259,7 +2309,12 @@ export namespace Prisma {
     title?: true
     content?: true
     published?: true
+    postType?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
     authorId?: true
+    dogId?: true
   }
 
   export type PostMaxAggregateInputType = {
@@ -2267,7 +2322,12 @@ export namespace Prisma {
     title?: true
     content?: true
     published?: true
+    postType?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
     authorId?: true
+    dogId?: true
   }
 
   export type PostCountAggregateInputType = {
@@ -2275,7 +2335,12 @@ export namespace Prisma {
     title?: true
     content?: true
     published?: true
+    postType?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
     authorId?: true
+    dogId?: true
     _all?: true
   }
 
@@ -2369,8 +2434,13 @@ export namespace Prisma {
     id: number
     title: string
     content: string | null
-    published: boolean | null
+    published: boolean
+    postType: string
+    imageUrl: string | null
+    createdAt: Date
+    updatedAt: Date
     authorId: number | null
+    dogId: number | null
     _count: PostCountAggregateOutputType | null
     _avg: PostAvgAggregateOutputType | null
     _sum: PostSumAggregateOutputType | null
@@ -2397,8 +2467,14 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     published?: boolean
+    postType?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     authorId?: boolean
+    dogId?: boolean
     author?: boolean | Post$authorArgs<ExtArgs>
+    dog?: boolean | Post$dogArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2406,8 +2482,14 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     published?: boolean
+    postType?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     authorId?: boolean
+    dogId?: boolean
     author?: boolean | Post$authorArgs<ExtArgs>
+    dog?: boolean | Post$dogArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2415,8 +2497,14 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     published?: boolean
+    postType?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     authorId?: boolean
+    dogId?: boolean
     author?: boolean | Post$authorArgs<ExtArgs>
+    dog?: boolean | Post$dogArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectScalar = {
@@ -2424,31 +2512,45 @@ export namespace Prisma {
     title?: boolean
     content?: boolean
     published?: boolean
+    postType?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
     authorId?: boolean
+    dogId?: boolean
   }
 
-  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "published" | "authorId", ExtArgs["result"]["post"]>
+  export type PostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "content" | "published" | "postType" | "imageUrl" | "createdAt" | "updatedAt" | "authorId" | "dogId", ExtArgs["result"]["post"]>
   export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Post$authorArgs<ExtArgs>
+    dog?: boolean | Post$dogArgs<ExtArgs>
   }
   export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Post$authorArgs<ExtArgs>
+    dog?: boolean | Post$dogArgs<ExtArgs>
   }
   export type PostIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     author?: boolean | Post$authorArgs<ExtArgs>
+    dog?: boolean | Post$dogArgs<ExtArgs>
   }
 
   export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
     objects: {
       author: Prisma.$UserPayload<ExtArgs> | null
+      dog: Prisma.$DogPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       title: string
       content: string | null
-      published: boolean | null
+      published: boolean
+      postType: string
+      imageUrl: string | null
+      createdAt: Date
+      updatedAt: Date
       authorId: number | null
+      dogId: number | null
     }, ExtArgs["result"]["post"]>
     composites: {}
   }
@@ -2844,6 +2946,7 @@ export namespace Prisma {
   export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     author<T extends Post$authorArgs<ExtArgs> = {}>(args?: Subset<T, Post$authorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    dog<T extends Post$dogArgs<ExtArgs> = {}>(args?: Subset<T, Post$dogArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2877,7 +2980,12 @@ export namespace Prisma {
     readonly title: FieldRef<"Post", 'String'>
     readonly content: FieldRef<"Post", 'String'>
     readonly published: FieldRef<"Post", 'Boolean'>
+    readonly postType: FieldRef<"Post", 'String'>
+    readonly imageUrl: FieldRef<"Post", 'String'>
+    readonly createdAt: FieldRef<"Post", 'DateTime'>
+    readonly updatedAt: FieldRef<"Post", 'DateTime'>
     readonly authorId: FieldRef<"Post", 'Int'>
+    readonly dogId: FieldRef<"Post", 'Int'>
   }
     
 
@@ -3293,6 +3401,25 @@ export namespace Prisma {
   }
 
   /**
+   * Post.dog
+   */
+  export type Post$dogArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    where?: DogWhereInput
+  }
+
+  /**
    * Post without action
    */
   export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3574,6 +3701,8 @@ export namespace Prisma {
     updatedAt?: boolean
     ownerId?: boolean
     owner?: boolean | Dog$ownerArgs<ExtArgs>
+    posts?: boolean | Dog$postsArgs<ExtArgs>
+    _count?: boolean | DogCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["dog"]>
 
   export type DogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3626,6 +3755,8 @@ export namespace Prisma {
   export type DogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "breed" | "age" | "size" | "gender" | "description" | "isAdopted" | "imageUrl" | "createdAt" | "updatedAt" | "ownerId", ExtArgs["result"]["dog"]>
   export type DogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Dog$ownerArgs<ExtArgs>
+    posts?: boolean | Dog$postsArgs<ExtArgs>
+    _count?: boolean | DogCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type DogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     owner?: boolean | Dog$ownerArgs<ExtArgs>
@@ -3638,6 +3769,7 @@ export namespace Prisma {
     name: "Dog"
     objects: {
       owner: Prisma.$UserPayload<ExtArgs> | null
+      posts: Prisma.$PostPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4047,6 +4179,7 @@ export namespace Prisma {
   export interface Prisma__DogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     owner<T extends Dog$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Dog$ownerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    posts<T extends Dog$postsArgs<ExtArgs> = {}>(args?: Subset<T, Dog$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4503,6 +4636,30 @@ export namespace Prisma {
   }
 
   /**
+   * Dog.posts
+   */
+  export type Dog$postsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Post
+     */
+    omit?: PostOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
+    cursor?: PostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
    * Dog without action
    */
   export type DogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4549,7 +4706,12 @@ export namespace Prisma {
     title: 'title',
     content: 'content',
     published: 'published',
-    authorId: 'authorId'
+    postType: 'postType',
+    imageUrl: 'imageUrl',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    authorId: 'authorId',
+    dogId: 'dogId'
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -4725,18 +4887,30 @@ export namespace Prisma {
     id?: IntFilter<"Post"> | number
     title?: StringFilter<"Post"> | string
     content?: StringNullableFilter<"Post"> | string | null
-    published?: BoolNullableFilter<"Post"> | boolean | null
+    published?: BoolFilter<"Post"> | boolean
+    postType?: StringFilter<"Post"> | string
+    imageUrl?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: IntNullableFilter<"Post"> | number | null
+    dogId?: IntNullableFilter<"Post"> | number | null
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    dog?: XOR<DogNullableScalarRelationFilter, DogWhereInput> | null
   }
 
   export type PostOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrderInput | SortOrder
-    published?: SortOrderInput | SortOrder
+    published?: SortOrder
+    postType?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     authorId?: SortOrderInput | SortOrder
+    dogId?: SortOrderInput | SortOrder
     author?: UserOrderByWithRelationInput
+    dog?: DogOrderByWithRelationInput
   }
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -4746,17 +4920,28 @@ export namespace Prisma {
     NOT?: PostWhereInput | PostWhereInput[]
     title?: StringFilter<"Post"> | string
     content?: StringNullableFilter<"Post"> | string | null
-    published?: BoolNullableFilter<"Post"> | boolean | null
+    published?: BoolFilter<"Post"> | boolean
+    postType?: StringFilter<"Post"> | string
+    imageUrl?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: IntNullableFilter<"Post"> | number | null
+    dogId?: IntNullableFilter<"Post"> | number | null
     author?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    dog?: XOR<DogNullableScalarRelationFilter, DogWhereInput> | null
   }, "id">
 
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrderInput | SortOrder
-    published?: SortOrderInput | SortOrder
+    published?: SortOrder
+    postType?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     authorId?: SortOrderInput | SortOrder
+    dogId?: SortOrderInput | SortOrder
     _count?: PostCountOrderByAggregateInput
     _avg?: PostAvgOrderByAggregateInput
     _max?: PostMaxOrderByAggregateInput
@@ -4771,8 +4956,13 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Post"> | number
     title?: StringWithAggregatesFilter<"Post"> | string
     content?: StringNullableWithAggregatesFilter<"Post"> | string | null
-    published?: BoolNullableWithAggregatesFilter<"Post"> | boolean | null
+    published?: BoolWithAggregatesFilter<"Post"> | boolean
+    postType?: StringWithAggregatesFilter<"Post"> | string
+    imageUrl?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     authorId?: IntNullableWithAggregatesFilter<"Post"> | number | null
+    dogId?: IntNullableWithAggregatesFilter<"Post"> | number | null
   }
 
   export type DogWhereInput = {
@@ -4792,6 +4982,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Dog"> | Date | string
     ownerId?: IntNullableFilter<"Dog"> | number | null
     owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    posts?: PostListRelationFilter
   }
 
   export type DogOrderByWithRelationInput = {
@@ -4808,6 +4999,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     ownerId?: SortOrderInput | SortOrder
     owner?: UserOrderByWithRelationInput
+    posts?: PostOrderByRelationAggregateInput
   }
 
   export type DogWhereUniqueInput = Prisma.AtLeast<{
@@ -4827,6 +5019,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Dog"> | Date | string
     ownerId?: IntNullableFilter<"Dog"> | number | null
     owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+    posts?: PostListRelationFilter
   }, "id">
 
   export type DogOrderByWithAggregationInput = {
@@ -4917,53 +5110,87 @@ export namespace Prisma {
   export type PostCreateInput = {
     title: string
     content?: string | null
-    published?: boolean | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     author?: UserCreateNestedOneWithoutPostsInput
+    dog?: DogCreateNestedOneWithoutPostsInput
   }
 
   export type PostUncheckedCreateInput = {
     id?: number
     title: string
     content?: string | null
-    published?: boolean | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     authorId?: number | null
+    dogId?: number | null
   }
 
   export type PostUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     author?: UserUpdateOneWithoutPostsNestedInput
+    dog?: DogUpdateOneWithoutPostsNestedInput
   }
 
   export type PostUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    dogId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PostCreateManyInput = {
     id?: number
     title: string
     content?: string | null
-    published?: boolean | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
     authorId?: number | null
+    dogId?: number | null
   }
 
   export type PostUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type PostUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
+    dogId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DogCreateInput = {
@@ -4978,6 +5205,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     owner?: UserCreateNestedOneWithoutDogsInput
+    posts?: PostCreateNestedManyWithoutDogInput
   }
 
   export type DogUncheckedCreateInput = {
@@ -4993,6 +5221,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     ownerId?: number | null
+    posts?: PostUncheckedCreateNestedManyWithoutDogInput
   }
 
   export type DogUpdateInput = {
@@ -5007,6 +5236,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     owner?: UserUpdateOneWithoutDogsNestedInput
+    posts?: PostUpdateManyWithoutDogNestedInput
   }
 
   export type DogUncheckedUpdateInput = {
@@ -5022,6 +5252,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     ownerId?: NullableIntFieldUpdateOperationsInput | number | null
+    posts?: PostUncheckedUpdateManyWithoutDogNestedInput
   }
 
   export type DogCreateManyInput = {
@@ -5211,9 +5442,20 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type BoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type IntNullableFilter<$PrismaModel = never> = {
@@ -5232,17 +5474,28 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
+  export type DogNullableScalarRelationFilter = {
+    is?: DogWhereInput | null
+    isNot?: DogWhereInput | null
+  }
+
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
     content?: SortOrder
     published?: SortOrder
+    postType?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     authorId?: SortOrder
+    dogId?: SortOrder
   }
 
   export type PostAvgOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
+    dogId?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -5250,7 +5503,12 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     published?: SortOrder
+    postType?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     authorId?: SortOrder
+    dogId?: SortOrder
   }
 
   export type PostMinOrderByAggregateInput = {
@@ -5258,20 +5516,40 @@ export namespace Prisma {
     title?: SortOrder
     content?: SortOrder
     published?: SortOrder
+    postType?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
     authorId?: SortOrder
+    dogId?: SortOrder
   }
 
   export type PostSumOrderByAggregateInput = {
     id?: SortOrder
     authorId?: SortOrder
+    dogId?: SortOrder
   }
 
-  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -5288,22 +5566,6 @@ export namespace Prisma {
     _sum?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedIntNullableFilter<$PrismaModel>
     _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type DateTimeFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
   export type DogCountOrderByAggregateInput = {
@@ -5361,28 +5623,6 @@ export namespace Prisma {
     id?: SortOrder
     age?: SortOrder
     ownerId?: SortOrder
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type PostCreateNestedManyWithoutAuthorInput = {
@@ -5491,8 +5731,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type NullableBoolFieldUpdateOperationsInput = {
-    set?: boolean | null
+  export type DogCreateNestedOneWithoutPostsInput = {
+    create?: XOR<DogCreateWithoutPostsInput, DogUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutPostsInput
+    connect?: DogWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type UserUpdateOneWithoutPostsNestedInput = {
@@ -5503,6 +5753,16 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPostsInput, UserUpdateWithoutPostsInput>, UserUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type DogUpdateOneWithoutPostsNestedInput = {
+    create?: XOR<DogCreateWithoutPostsInput, DogUncheckedCreateWithoutPostsInput>
+    connectOrCreate?: DogCreateOrConnectWithoutPostsInput
+    upsert?: DogUpsertWithoutPostsInput
+    disconnect?: DogWhereInput | boolean
+    delete?: DogWhereInput | boolean
+    connect?: DogWhereUniqueInput
+    update?: XOR<XOR<DogUpdateToOneWithWhereWithoutPostsInput, DogUpdateWithoutPostsInput>, DogUncheckedUpdateWithoutPostsInput>
   }
 
   export type NullableIntFieldUpdateOperationsInput = {
@@ -5519,12 +5779,18 @@ export namespace Prisma {
     connect?: UserWhereUniqueInput
   }
 
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
+  export type PostCreateNestedManyWithoutDogInput = {
+    create?: XOR<PostCreateWithoutDogInput, PostUncheckedCreateWithoutDogInput> | PostCreateWithoutDogInput[] | PostUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutDogInput | PostCreateOrConnectWithoutDogInput[]
+    createMany?: PostCreateManyDogInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type PostUncheckedCreateNestedManyWithoutDogInput = {
+    create?: XOR<PostCreateWithoutDogInput, PostUncheckedCreateWithoutDogInput> | PostCreateWithoutDogInput[] | PostUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutDogInput | PostCreateOrConnectWithoutDogInput[]
+    createMany?: PostCreateManyDogInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
   export type UserUpdateOneWithoutDogsNestedInput = {
@@ -5535,6 +5801,34 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDogsInput, UserUpdateWithoutDogsInput>, UserUncheckedUpdateWithoutDogsInput>
+  }
+
+  export type PostUpdateManyWithoutDogNestedInput = {
+    create?: XOR<PostCreateWithoutDogInput, PostUncheckedCreateWithoutDogInput> | PostCreateWithoutDogInput[] | PostUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutDogInput | PostCreateOrConnectWithoutDogInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutDogInput | PostUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: PostCreateManyDogInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutDogInput | PostUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutDogInput | PostUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type PostUncheckedUpdateManyWithoutDogNestedInput = {
+    create?: XOR<PostCreateWithoutDogInput, PostUncheckedCreateWithoutDogInput> | PostCreateWithoutDogInput[] | PostUncheckedCreateWithoutDogInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutDogInput | PostCreateOrConnectWithoutDogInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutDogInput | PostUpsertWithWhereUniqueWithoutDogInput[]
+    createMany?: PostCreateManyDogInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutDogInput | PostUpdateWithWhereUniqueWithoutDogInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutDogInput | PostUpdateManyWithWhereWithoutDogInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -5648,46 +5942,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedBoolNullableFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
-  }
-
-  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
-    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedBoolNullableFilter<$PrismaModel>
-    _max?: NestedBoolNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _avg?: NestedFloatNullableFilter<$PrismaModel>
-    _sum?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedIntNullableFilter<$PrismaModel>
-    _max?: NestedIntNullableFilter<$PrismaModel>
-  }
-
-  export type NestedFloatNullableFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
-  }
-
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -5726,17 +5980,54 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
   export type PostCreateWithoutAuthorInput = {
     title: string
     content?: string | null
-    published?: boolean | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dog?: DogCreateNestedOneWithoutPostsInput
   }
 
   export type PostUncheckedCreateWithoutAuthorInput = {
     id?: number
     title: string
     content?: string | null
-    published?: boolean | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dogId?: number | null
   }
 
   export type PostCreateOrConnectWithoutAuthorInput = {
@@ -5760,6 +6051,7 @@ export namespace Prisma {
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    posts?: PostCreateNestedManyWithoutDogInput
   }
 
   export type DogUncheckedCreateWithoutOwnerInput = {
@@ -5774,6 +6066,7 @@ export namespace Prisma {
     imageUrl?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    posts?: PostUncheckedCreateNestedManyWithoutDogInput
   }
 
   export type DogCreateOrConnectWithoutOwnerInput = {
@@ -5809,8 +6102,13 @@ export namespace Prisma {
     id?: IntFilter<"Post"> | number
     title?: StringFilter<"Post"> | string
     content?: StringNullableFilter<"Post"> | string | null
-    published?: BoolNullableFilter<"Post"> | boolean | null
+    published?: BoolFilter<"Post"> | boolean
+    postType?: StringFilter<"Post"> | string
+    imageUrl?: StringNullableFilter<"Post"> | string | null
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
     authorId?: IntNullableFilter<"Post"> | number | null
+    dogId?: IntNullableFilter<"Post"> | number | null
   }
 
   export type DogUpsertWithWhereUniqueWithoutOwnerInput = {
@@ -5865,6 +6163,40 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
   }
 
+  export type DogCreateWithoutPostsInput = {
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutDogsInput
+  }
+
+  export type DogUncheckedCreateWithoutPostsInput = {
+    id?: number
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerId?: number | null
+  }
+
+  export type DogCreateOrConnectWithoutPostsInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutPostsInput, DogUncheckedCreateWithoutPostsInput>
+  }
+
   export type UserUpsertWithoutPostsInput = {
     update: XOR<UserUpdateWithoutPostsInput, UserUncheckedUpdateWithoutPostsInput>
     create: XOR<UserCreateWithoutPostsInput, UserUncheckedCreateWithoutPostsInput>
@@ -5889,6 +6221,46 @@ export namespace Prisma {
     dogs?: DogUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
+  export type DogUpsertWithoutPostsInput = {
+    update: XOR<DogUpdateWithoutPostsInput, DogUncheckedUpdateWithoutPostsInput>
+    create: XOR<DogCreateWithoutPostsInput, DogUncheckedCreateWithoutPostsInput>
+    where?: DogWhereInput
+  }
+
+  export type DogUpdateToOneWithWhereWithoutPostsInput = {
+    where?: DogWhereInput
+    data: XOR<DogUpdateWithoutPostsInput, DogUncheckedUpdateWithoutPostsInput>
+  }
+
+  export type DogUpdateWithoutPostsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutDogsNestedInput
+  }
+
+  export type DogUncheckedUpdateWithoutPostsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type UserCreateWithoutDogsInput = {
     email: string
     name?: string | null
@@ -5905,6 +6277,39 @@ export namespace Prisma {
   export type UserCreateOrConnectWithoutDogsInput = {
     where: UserWhereUniqueInput
     create: XOR<UserCreateWithoutDogsInput, UserUncheckedCreateWithoutDogsInput>
+  }
+
+  export type PostCreateWithoutDogInput = {
+    title: string
+    content?: string | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    author?: UserCreateNestedOneWithoutPostsInput
+  }
+
+  export type PostUncheckedCreateWithoutDogInput = {
+    id?: number
+    title: string
+    content?: string | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    authorId?: number | null
+  }
+
+  export type PostCreateOrConnectWithoutDogInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutDogInput, PostUncheckedCreateWithoutDogInput>
+  }
+
+  export type PostCreateManyDogInputEnvelope = {
+    data: PostCreateManyDogInput | PostCreateManyDogInput[]
+    skipDuplicates?: boolean
   }
 
   export type UserUpsertWithoutDogsInput = {
@@ -5931,11 +6336,32 @@ export namespace Prisma {
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
+  export type PostUpsertWithWhereUniqueWithoutDogInput = {
+    where: PostWhereUniqueInput
+    update: XOR<PostUpdateWithoutDogInput, PostUncheckedUpdateWithoutDogInput>
+    create: XOR<PostCreateWithoutDogInput, PostUncheckedCreateWithoutDogInput>
+  }
+
+  export type PostUpdateWithWhereUniqueWithoutDogInput = {
+    where: PostWhereUniqueInput
+    data: XOR<PostUpdateWithoutDogInput, PostUncheckedUpdateWithoutDogInput>
+  }
+
+  export type PostUpdateManyWithWhereWithoutDogInput = {
+    where: PostScalarWhereInput
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutDogInput>
+  }
+
   export type PostCreateManyAuthorInput = {
     id?: number
     title: string
     content?: string | null
-    published?: boolean | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dogId?: number | null
   }
 
   export type DogCreateManyOwnerInput = {
@@ -5955,21 +6381,36 @@ export namespace Prisma {
   export type PostUpdateWithoutAuthorInput = {
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dog?: DogUpdateOneWithoutPostsNestedInput
   }
 
   export type PostUncheckedUpdateWithoutAuthorInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dogId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type PostUncheckedUpdateManyWithoutAuthorInput = {
     id?: IntFieldUpdateOperationsInput | number
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
-    published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dogId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type DogUpdateWithoutOwnerInput = {
@@ -5983,6 +6424,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUpdateManyWithoutDogNestedInput
   }
 
   export type DogUncheckedUpdateWithoutOwnerInput = {
@@ -5997,6 +6439,7 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    posts?: PostUncheckedUpdateManyWithoutDogNestedInput
   }
 
   export type DogUncheckedUpdateManyWithoutOwnerInput = {
@@ -6011,6 +6454,53 @@ export namespace Prisma {
     imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostCreateManyDogInput = {
+    id?: number
+    title: string
+    content?: string | null
+    published?: boolean
+    postType?: string
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    authorId?: number | null
+  }
+
+  export type PostUpdateWithoutDogInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    author?: UserUpdateOneWithoutPostsNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type PostUncheckedUpdateManyWithoutDogInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    content?: NullableStringFieldUpdateOperationsInput | string | null
+    published?: BoolFieldUpdateOperationsInput | boolean
+    postType?: StringFieldUpdateOperationsInput | string
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    authorId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
 

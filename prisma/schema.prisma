@@ -23,12 +23,18 @@ model User {
 }
 
 model Post {
-  id        Int      @default(autoincrement()) @id
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+  id          Int      @default(autoincrement()) @id
+  title       String
+  content     String?
+  published   Boolean  @default(false)
+  postType    String   @default("general") // "adoption", "general", "update"
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author      User?    @relation(fields: [authorId], references: [id])
+  authorId    Int?
+  dog         Dog?     @relation(fields: [dogId], references: [id])
+  dogId       Int?
 }
 
 model Dog {
@@ -45,4 +51,5 @@ model Dog {
   updatedAt   DateTime @updatedAt
   owner       User?    @relation(fields: [ownerId], references: [id])
   ownerId     Int?
+  posts       Post[]
 }

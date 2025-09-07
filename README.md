@@ -1,98 +1,138 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🐕 Patamatch Backend - Sistema de Adoção de Cachorros
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+API REST desenvolvida com NestJS para gerenciar adoção de cachorros, usuários e posts.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Como Executar
 
-## Description
+### Modo Local (Apenas localhost)
+```bash
+npm run start:local
+```
+- **Acesso**: `http://localhost:3000`
+- **Uso**: Desenvolvimento local, apenas sua máquina
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Modo Rede (Acessível por outros dispositivos)
+```bash
+npm run start:network
+```
+- **Acesso local**: `http://localhost:3000`
+- **Acesso externo**: `http://192.168.0.245:3000`
+- **Uso**: Testes com outros dispositivos na mesma rede
 
-## Project setup
+### Modo Desenvolvimento (Padrão)
+```bash
+npm run start:dev
+```
+- **Acesso**: `http://localhost:3000`
+- **Uso**: Desenvolvimento com hot reload
+
+## 📱 Acesso pela Rede
+
+Para acessar de outros dispositivos na mesma rede:
+
+1. **Descubra seu IP local**:
+   ```bash
+   hostname -I
+   ```
+
+2. **Use o IP encontrado**:
+   - Exemplo: `http://192.168.0.245:3000`
+
+3. **Dispositivos que podem acessar**:
+   - Celulares na mesma rede WiFi
+   - Outros computadores na mesma rede
+   - Tablets na mesma rede
+
+## 🔧 Scripts Disponíveis
+
+| Script | Descrição | Host | Uso |
+|--------|-----------|------|-----|
+| `npm run start:local` | Desenvolvimento local | localhost | Apenas sua máquina |
+| `npm run start:network` | Desenvolvimento em rede | 0.0.0.0 | Outros dispositivos |
+| `npm run start:dev` | Desenvolvimento padrão | localhost | Hot reload |
+| `npm run start:prod:local` | Produção local | localhost | Apenas sua máquina |
+| `npm run start:prod:network` | Produção em rede | 0.0.0.0 | Outros dispositivos |
+
+## 🛠️ Endpoints Disponíveis
+
+### 👥 Usuários
+- `GET /users` - Listar usuários
+- `POST /users` - Criar usuário
+- `GET /users/:id` - Buscar usuário
+- `PATCH /users/:id` - Atualizar usuário
+- `DELETE /users/:id` - Deletar usuário
+
+### 🐕 Cachorros
+- `GET /dogs` - Listar cachorros
+- `POST /dogs` - Criar cachorro
+- `GET /dogs/available` - Cachorros disponíveis para adoção
+- `GET /dogs/owner/:ownerId` - Cachorros de um proprietário
+- `GET /dogs/:id` - Buscar cachorro
+- `PATCH /dogs/:id` - Atualizar cachorro
+- `PATCH /dogs/:id/adopt` - Adotar cachorro
+- `DELETE /dogs/:id` - Deletar cachorro
+
+### 📝 Posts
+- `GET /posts` - Listar posts
+- `POST /posts` - Criar post
+- `GET /posts/published` - Posts publicados
+- `GET /posts/type/:postType` - Posts por tipo (adoption, general, update)
+- `GET /posts/author/:authorId` - Posts de um autor
+- `GET /posts/dog/:dogId` - Posts de um cachorro
+- `GET /posts/:id` - Buscar post
+- `PATCH /posts/:id` - Atualizar post
+- `PATCH /posts/:id/publish` - Publicar post
+- `PATCH /posts/:id/unpublish` - Despublicar post
+- `DELETE /posts/:id` - Deletar post
+
+## 🗄️ Banco de Dados
+
+O projeto usa PostgreSQL com Prisma ORM. Para configurar:
+
+1. **Instalar dependências**:
+   ```bash
+   npm install
+   ```
+
+2. **Configurar banco**:
+   ```bash
+   npx prisma db push
+   ```
+
+3. **Gerar cliente Prisma**:
+   ```bash
+   npx prisma generate
+   ```
+
+## 🧪 Testes
 
 ```bash
-$ npm install
+# Executar todos os testes
+npm test
+
+# Executar testes em modo watch
+npm run test:watch
+
+# Executar testes com cobertura
+npm run test:cov
 ```
 
-## Compile and run the project
+## 📋 Requisitos
 
-```bash
-# development
-$ npm run start
+- Node.js 18+
+- PostgreSQL
+- npm ou yarn
 
-# watch mode
-$ npm run start:dev
+## 🔒 Segurança
 
-# production mode
-$ npm run start:prod
-```
+- Validação de dados com class-validator
+- Tratamento de erros robusto
+- Relacionamentos seguros entre entidades
 
-## Run tests
+## 📞 Suporte
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Para dúvidas ou problemas, verifique:
+1. Se o banco de dados está rodando
+2. Se a porta 3000 está disponível
+3. Se o firewall não está bloqueando conexões
+4. Se todos os dispositivos estão na mesma rede
