@@ -19,6 +19,7 @@ model User {
   email String  @unique
   name  String?
   posts Post[]
+  dogs  Dog[]
 }
 
 model Post {
@@ -28,4 +29,20 @@ model Post {
   published Boolean? @default(false)
   author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+}
+
+model Dog {
+  id          Int      @default(autoincrement()) @id
+  name        String
+  breed       String
+  age         Int
+  size        String   // "small", "medium", "large"
+  gender      String   // "male", "female"
+  description String?
+  isAdopted   Boolean  @default(false)
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  owner       User?    @relation(fields: [ownerId], references: [id])
+  ownerId     Int?
 }

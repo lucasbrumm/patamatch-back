@@ -23,6 +23,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  * 
  */
 export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
+/**
+ * Model Dog
+ * 
+ */
+export type Dog = $Result.DefaultSelection<Prisma.$DogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -168,6 +173,16 @@ export class PrismaClient<
     * ```
     */
   get post(): Prisma.PostDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.dog`: Exposes CRUD operations for the **Dog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dogs
+    * const dogs = await prisma.dog.findMany()
+    * ```
+    */
+  get dog(): Prisma.DogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -609,7 +624,8 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
-    Post: 'Post'
+    Post: 'Post',
+    Dog: 'Dog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -628,7 +644,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "post"
+      modelProps: "user" | "post" | "dog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -780,6 +796,80 @@ export namespace Prisma {
           }
         }
       }
+      Dog: {
+        payload: Prisma.$DogPayload<ExtArgs>
+        fields: Prisma.DogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          findFirst: {
+            args: Prisma.DogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          findMany: {
+            args: Prisma.DogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>[]
+          }
+          create: {
+            args: Prisma.DogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          createMany: {
+            args: Prisma.DogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>[]
+          }
+          delete: {
+            args: Prisma.DogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          update: {
+            args: Prisma.DogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          deleteMany: {
+            args: Prisma.DogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>[]
+          }
+          upsert: {
+            args: Prisma.DogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DogPayload>
+          }
+          aggregate: {
+            args: Prisma.DogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDog>
+          }
+          groupBy: {
+            args: Prisma.DogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DogCountArgs<ExtArgs>
+            result: $Utils.Optional<DogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -866,6 +956,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     post?: PostOmit
+    dog?: DogOmit
   }
 
   /* Types for Logging */
@@ -961,10 +1052,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     posts: number
+    dogs: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | UserCountOutputTypeCountPostsArgs
+    dogs?: boolean | UserCountOutputTypeCountDogsArgs
   }
 
   // Custom InputTypes
@@ -983,6 +1076,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PostWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountDogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DogWhereInput
   }
 
 
@@ -1173,6 +1273,7 @@ export namespace Prisma {
     email?: boolean
     name?: boolean
     posts?: boolean | User$postsArgs<ExtArgs>
+    dogs?: boolean | User$dogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -1197,6 +1298,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     posts?: boolean | User$postsArgs<ExtArgs>
+    dogs?: boolean | User$dogsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -1206,6 +1308,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       posts: Prisma.$PostPayload<ExtArgs>[]
+      dogs: Prisma.$DogPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -1606,6 +1709,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     posts<T extends User$postsArgs<ExtArgs> = {}>(args?: Subset<T, User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    dogs<T extends User$dogsArgs<ExtArgs> = {}>(args?: Subset<T, User$dogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2047,6 +2151,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
+   * User.dogs
+   */
+  export type User$dogsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    where?: DogWhereInput
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    cursor?: DogWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
   }
 
   /**
@@ -3184,6 +3312,1216 @@ export namespace Prisma {
 
 
   /**
+   * Model Dog
+   */
+
+  export type AggregateDog = {
+    _count: DogCountAggregateOutputType | null
+    _avg: DogAvgAggregateOutputType | null
+    _sum: DogSumAggregateOutputType | null
+    _min: DogMinAggregateOutputType | null
+    _max: DogMaxAggregateOutputType | null
+  }
+
+  export type DogAvgAggregateOutputType = {
+    id: number | null
+    age: number | null
+    ownerId: number | null
+  }
+
+  export type DogSumAggregateOutputType = {
+    id: number | null
+    age: number | null
+    ownerId: number | null
+  }
+
+  export type DogMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    breed: string | null
+    age: number | null
+    size: string | null
+    gender: string | null
+    description: string | null
+    isAdopted: boolean | null
+    imageUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    ownerId: number | null
+  }
+
+  export type DogMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    breed: string | null
+    age: number | null
+    size: string | null
+    gender: string | null
+    description: string | null
+    isAdopted: boolean | null
+    imageUrl: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    ownerId: number | null
+  }
+
+  export type DogCountAggregateOutputType = {
+    id: number
+    name: number
+    breed: number
+    age: number
+    size: number
+    gender: number
+    description: number
+    isAdopted: number
+    imageUrl: number
+    createdAt: number
+    updatedAt: number
+    ownerId: number
+    _all: number
+  }
+
+
+  export type DogAvgAggregateInputType = {
+    id?: true
+    age?: true
+    ownerId?: true
+  }
+
+  export type DogSumAggregateInputType = {
+    id?: true
+    age?: true
+    ownerId?: true
+  }
+
+  export type DogMinAggregateInputType = {
+    id?: true
+    name?: true
+    breed?: true
+    age?: true
+    size?: true
+    gender?: true
+    description?: true
+    isAdopted?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    ownerId?: true
+  }
+
+  export type DogMaxAggregateInputType = {
+    id?: true
+    name?: true
+    breed?: true
+    age?: true
+    size?: true
+    gender?: true
+    description?: true
+    isAdopted?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    ownerId?: true
+  }
+
+  export type DogCountAggregateInputType = {
+    id?: true
+    name?: true
+    breed?: true
+    age?: true
+    size?: true
+    gender?: true
+    description?: true
+    isAdopted?: true
+    imageUrl?: true
+    createdAt?: true
+    updatedAt?: true
+    ownerId?: true
+    _all?: true
+  }
+
+  export type DogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dog to aggregate.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dogs
+    **/
+    _count?: true | DogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DogMaxAggregateInputType
+  }
+
+  export type GetDogAggregateType<T extends DogAggregateArgs> = {
+        [P in keyof T & keyof AggregateDog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDog[P]>
+      : GetScalarType<T[P], AggregateDog[P]>
+  }
+
+
+
+
+  export type DogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DogWhereInput
+    orderBy?: DogOrderByWithAggregationInput | DogOrderByWithAggregationInput[]
+    by: DogScalarFieldEnum[] | DogScalarFieldEnum
+    having?: DogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DogCountAggregateInputType | true
+    _avg?: DogAvgAggregateInputType
+    _sum?: DogSumAggregateInputType
+    _min?: DogMinAggregateInputType
+    _max?: DogMaxAggregateInputType
+  }
+
+  export type DogGroupByOutputType = {
+    id: number
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description: string | null
+    isAdopted: boolean
+    imageUrl: string | null
+    createdAt: Date
+    updatedAt: Date
+    ownerId: number | null
+    _count: DogCountAggregateOutputType | null
+    _avg: DogAvgAggregateOutputType | null
+    _sum: DogSumAggregateOutputType | null
+    _min: DogMinAggregateOutputType | null
+    _max: DogMaxAggregateOutputType | null
+  }
+
+  type GetDogGroupByPayload<T extends DogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DogGroupByOutputType[P]>
+            : GetScalarType<T[P], DogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    breed?: boolean
+    age?: boolean
+    size?: boolean
+    gender?: boolean
+    description?: boolean
+    isAdopted?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    ownerId?: boolean
+    owner?: boolean | Dog$ownerArgs<ExtArgs>
+  }, ExtArgs["result"]["dog"]>
+
+  export type DogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    breed?: boolean
+    age?: boolean
+    size?: boolean
+    gender?: boolean
+    description?: boolean
+    isAdopted?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    ownerId?: boolean
+    owner?: boolean | Dog$ownerArgs<ExtArgs>
+  }, ExtArgs["result"]["dog"]>
+
+  export type DogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    breed?: boolean
+    age?: boolean
+    size?: boolean
+    gender?: boolean
+    description?: boolean
+    isAdopted?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    ownerId?: boolean
+    owner?: boolean | Dog$ownerArgs<ExtArgs>
+  }, ExtArgs["result"]["dog"]>
+
+  export type DogSelectScalar = {
+    id?: boolean
+    name?: boolean
+    breed?: boolean
+    age?: boolean
+    size?: boolean
+    gender?: boolean
+    description?: boolean
+    isAdopted?: boolean
+    imageUrl?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    ownerId?: boolean
+  }
+
+  export type DogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "breed" | "age" | "size" | "gender" | "description" | "isAdopted" | "imageUrl" | "createdAt" | "updatedAt" | "ownerId", ExtArgs["result"]["dog"]>
+  export type DogInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Dog$ownerArgs<ExtArgs>
+  }
+  export type DogIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Dog$ownerArgs<ExtArgs>
+  }
+  export type DogIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    owner?: boolean | Dog$ownerArgs<ExtArgs>
+  }
+
+  export type $DogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dog"
+    objects: {
+      owner: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      breed: string
+      age: number
+      size: string
+      gender: string
+      description: string | null
+      isAdopted: boolean
+      imageUrl: string | null
+      createdAt: Date
+      updatedAt: Date
+      ownerId: number | null
+    }, ExtArgs["result"]["dog"]>
+    composites: {}
+  }
+
+  type DogGetPayload<S extends boolean | null | undefined | DogDefaultArgs> = $Result.GetResult<Prisma.$DogPayload, S>
+
+  type DogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DogCountAggregateInputType | true
+    }
+
+  export interface DogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dog'], meta: { name: 'Dog' } }
+    /**
+     * Find zero or one Dog that matches the filter.
+     * @param {DogFindUniqueArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DogFindUniqueArgs>(args: SelectSubset<T, DogFindUniqueArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Dog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DogFindUniqueOrThrowArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DogFindUniqueOrThrowArgs>(args: SelectSubset<T, DogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogFindFirstArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DogFindFirstArgs>(args?: SelectSubset<T, DogFindFirstArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Dog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogFindFirstOrThrowArgs} args - Arguments to find a Dog
+     * @example
+     * // Get one Dog
+     * const dog = await prisma.dog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DogFindFirstOrThrowArgs>(args?: SelectSubset<T, DogFindFirstOrThrowArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Dogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dogs
+     * const dogs = await prisma.dog.findMany()
+     * 
+     * // Get first 10 Dogs
+     * const dogs = await prisma.dog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dogWithIdOnly = await prisma.dog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DogFindManyArgs>(args?: SelectSubset<T, DogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Dog.
+     * @param {DogCreateArgs} args - Arguments to create a Dog.
+     * @example
+     * // Create one Dog
+     * const Dog = await prisma.dog.create({
+     *   data: {
+     *     // ... data to create a Dog
+     *   }
+     * })
+     * 
+     */
+    create<T extends DogCreateArgs>(args: SelectSubset<T, DogCreateArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Dogs.
+     * @param {DogCreateManyArgs} args - Arguments to create many Dogs.
+     * @example
+     * // Create many Dogs
+     * const dog = await prisma.dog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DogCreateManyArgs>(args?: SelectSubset<T, DogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Dogs and returns the data saved in the database.
+     * @param {DogCreateManyAndReturnArgs} args - Arguments to create many Dogs.
+     * @example
+     * // Create many Dogs
+     * const dog = await prisma.dog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Dogs and only return the `id`
+     * const dogWithIdOnly = await prisma.dog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DogCreateManyAndReturnArgs>(args?: SelectSubset<T, DogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Dog.
+     * @param {DogDeleteArgs} args - Arguments to delete one Dog.
+     * @example
+     * // Delete one Dog
+     * const Dog = await prisma.dog.delete({
+     *   where: {
+     *     // ... filter to delete one Dog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DogDeleteArgs>(args: SelectSubset<T, DogDeleteArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Dog.
+     * @param {DogUpdateArgs} args - Arguments to update one Dog.
+     * @example
+     * // Update one Dog
+     * const dog = await prisma.dog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DogUpdateArgs>(args: SelectSubset<T, DogUpdateArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Dogs.
+     * @param {DogDeleteManyArgs} args - Arguments to filter Dogs to delete.
+     * @example
+     * // Delete a few Dogs
+     * const { count } = await prisma.dog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DogDeleteManyArgs>(args?: SelectSubset<T, DogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dogs
+     * const dog = await prisma.dog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DogUpdateManyArgs>(args: SelectSubset<T, DogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dogs and returns the data updated in the database.
+     * @param {DogUpdateManyAndReturnArgs} args - Arguments to update many Dogs.
+     * @example
+     * // Update many Dogs
+     * const dog = await prisma.dog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Dogs and only return the `id`
+     * const dogWithIdOnly = await prisma.dog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DogUpdateManyAndReturnArgs>(args: SelectSubset<T, DogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Dog.
+     * @param {DogUpsertArgs} args - Arguments to update or create a Dog.
+     * @example
+     * // Update or create a Dog
+     * const dog = await prisma.dog.upsert({
+     *   create: {
+     *     // ... data to create a Dog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DogUpsertArgs>(args: SelectSubset<T, DogUpsertArgs<ExtArgs>>): Prisma__DogClient<$Result.GetResult<Prisma.$DogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Dogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogCountArgs} args - Arguments to filter Dogs to count.
+     * @example
+     * // Count the number of Dogs
+     * const count = await prisma.dog.count({
+     *   where: {
+     *     // ... the filter for the Dogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends DogCountArgs>(
+      args?: Subset<T, DogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DogAggregateArgs>(args: Subset<T, DogAggregateArgs>): Prisma.PrismaPromise<GetDogAggregateType<T>>
+
+    /**
+     * Group by Dog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DogGroupByArgs['orderBy'] }
+        : { orderBy?: DogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dog model
+   */
+  readonly fields: DogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    owner<T extends Dog$ownerArgs<ExtArgs> = {}>(args?: Subset<T, Dog$ownerArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dog model
+   */
+  interface DogFieldRefs {
+    readonly id: FieldRef<"Dog", 'Int'>
+    readonly name: FieldRef<"Dog", 'String'>
+    readonly breed: FieldRef<"Dog", 'String'>
+    readonly age: FieldRef<"Dog", 'Int'>
+    readonly size: FieldRef<"Dog", 'String'>
+    readonly gender: FieldRef<"Dog", 'String'>
+    readonly description: FieldRef<"Dog", 'String'>
+    readonly isAdopted: FieldRef<"Dog", 'Boolean'>
+    readonly imageUrl: FieldRef<"Dog", 'String'>
+    readonly createdAt: FieldRef<"Dog", 'DateTime'>
+    readonly updatedAt: FieldRef<"Dog", 'DateTime'>
+    readonly ownerId: FieldRef<"Dog", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dog findUnique
+   */
+  export type DogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog findUniqueOrThrow
+   */
+  export type DogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog findFirst
+   */
+  export type DogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dogs.
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dogs.
+     */
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
+  }
+
+  /**
+   * Dog findFirstOrThrow
+   */
+  export type DogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dog to fetch.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dogs.
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dogs.
+     */
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
+  }
+
+  /**
+   * Dog findMany
+   */
+  export type DogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter, which Dogs to fetch.
+     */
+    where?: DogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dogs to fetch.
+     */
+    orderBy?: DogOrderByWithRelationInput | DogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dogs.
+     */
+    cursor?: DogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dogs.
+     */
+    skip?: number
+    distinct?: DogScalarFieldEnum | DogScalarFieldEnum[]
+  }
+
+  /**
+   * Dog create
+   */
+  export type DogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dog.
+     */
+    data: XOR<DogCreateInput, DogUncheckedCreateInput>
+  }
+
+  /**
+   * Dog createMany
+   */
+  export type DogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dogs.
+     */
+    data: DogCreateManyInput | DogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dog createManyAndReturn
+   */
+  export type DogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * The data used to create many Dogs.
+     */
+    data: DogCreateManyInput | DogCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Dog update
+   */
+  export type DogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dog.
+     */
+    data: XOR<DogUpdateInput, DogUncheckedUpdateInput>
+    /**
+     * Choose, which Dog to update.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog updateMany
+   */
+  export type DogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dogs.
+     */
+    data: XOR<DogUpdateManyMutationInput, DogUncheckedUpdateManyInput>
+    /**
+     * Filter which Dogs to update
+     */
+    where?: DogWhereInput
+    /**
+     * Limit how many Dogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dog updateManyAndReturn
+   */
+  export type DogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * The data used to update Dogs.
+     */
+    data: XOR<DogUpdateManyMutationInput, DogUncheckedUpdateManyInput>
+    /**
+     * Filter which Dogs to update
+     */
+    where?: DogWhereInput
+    /**
+     * Limit how many Dogs to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Dog upsert
+   */
+  export type DogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dog to update in case it exists.
+     */
+    where: DogWhereUniqueInput
+    /**
+     * In case the Dog found by the `where` argument doesn't exist, create a new Dog with this data.
+     */
+    create: XOR<DogCreateInput, DogUncheckedCreateInput>
+    /**
+     * In case the Dog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DogUpdateInput, DogUncheckedUpdateInput>
+  }
+
+  /**
+   * Dog delete
+   */
+  export type DogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+    /**
+     * Filter which Dog to delete.
+     */
+    where: DogWhereUniqueInput
+  }
+
+  /**
+   * Dog deleteMany
+   */
+  export type DogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dogs to delete
+     */
+    where?: DogWhereInput
+    /**
+     * Limit how many Dogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Dog.owner
+   */
+  export type Dog$ownerArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * Dog without action
+   */
+  export type DogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dog
+     */
+    select?: DogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Dog
+     */
+    omit?: DogOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DogInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -3215,6 +4553,24 @@ export namespace Prisma {
   };
 
   export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+  export const DogScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    breed: 'breed',
+    age: 'age',
+    size: 'size',
+    gender: 'gender',
+    description: 'description',
+    isAdopted: 'isAdopted',
+    imageUrl: 'imageUrl',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    ownerId: 'ownerId'
+  };
+
+  export type DogScalarFieldEnum = (typeof DogScalarFieldEnum)[keyof typeof DogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -3282,6 +4638,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'DateTime'
+   */
+  export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'DateTime[]'
+   */
+  export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -3306,6 +4676,7 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     name?: StringNullableFilter<"User"> | string | null
     posts?: PostListRelationFilter
+    dogs?: DogListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -3313,6 +4684,7 @@ export namespace Prisma {
     email?: SortOrder
     name?: SortOrderInput | SortOrder
     posts?: PostOrderByRelationAggregateInput
+    dogs?: DogOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -3323,6 +4695,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     name?: StringNullableFilter<"User"> | string | null
     posts?: PostListRelationFilter
+    dogs?: DogListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -3402,10 +4775,103 @@ export namespace Prisma {
     authorId?: IntNullableWithAggregatesFilter<"Post"> | number | null
   }
 
+  export type DogWhereInput = {
+    AND?: DogWhereInput | DogWhereInput[]
+    OR?: DogWhereInput[]
+    NOT?: DogWhereInput | DogWhereInput[]
+    id?: IntFilter<"Dog"> | number
+    name?: StringFilter<"Dog"> | string
+    breed?: StringFilter<"Dog"> | string
+    age?: IntFilter<"Dog"> | number
+    size?: StringFilter<"Dog"> | string
+    gender?: StringFilter<"Dog"> | string
+    description?: StringNullableFilter<"Dog"> | string | null
+    isAdopted?: BoolFilter<"Dog"> | boolean
+    imageUrl?: StringNullableFilter<"Dog"> | string | null
+    createdAt?: DateTimeFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeFilter<"Dog"> | Date | string
+    ownerId?: IntNullableFilter<"Dog"> | number | null
+    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type DogOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    breed?: SortOrder
+    age?: SortOrder
+    size?: SortOrder
+    gender?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isAdopted?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    ownerId?: SortOrderInput | SortOrder
+    owner?: UserOrderByWithRelationInput
+  }
+
+  export type DogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DogWhereInput | DogWhereInput[]
+    OR?: DogWhereInput[]
+    NOT?: DogWhereInput | DogWhereInput[]
+    name?: StringFilter<"Dog"> | string
+    breed?: StringFilter<"Dog"> | string
+    age?: IntFilter<"Dog"> | number
+    size?: StringFilter<"Dog"> | string
+    gender?: StringFilter<"Dog"> | string
+    description?: StringNullableFilter<"Dog"> | string | null
+    isAdopted?: BoolFilter<"Dog"> | boolean
+    imageUrl?: StringNullableFilter<"Dog"> | string | null
+    createdAt?: DateTimeFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeFilter<"Dog"> | Date | string
+    ownerId?: IntNullableFilter<"Dog"> | number | null
+    owner?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type DogOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    breed?: SortOrder
+    age?: SortOrder
+    size?: SortOrder
+    gender?: SortOrder
+    description?: SortOrderInput | SortOrder
+    isAdopted?: SortOrder
+    imageUrl?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    ownerId?: SortOrderInput | SortOrder
+    _count?: DogCountOrderByAggregateInput
+    _avg?: DogAvgOrderByAggregateInput
+    _max?: DogMaxOrderByAggregateInput
+    _min?: DogMinOrderByAggregateInput
+    _sum?: DogSumOrderByAggregateInput
+  }
+
+  export type DogScalarWhereWithAggregatesInput = {
+    AND?: DogScalarWhereWithAggregatesInput | DogScalarWhereWithAggregatesInput[]
+    OR?: DogScalarWhereWithAggregatesInput[]
+    NOT?: DogScalarWhereWithAggregatesInput | DogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"Dog"> | number
+    name?: StringWithAggregatesFilter<"Dog"> | string
+    breed?: StringWithAggregatesFilter<"Dog"> | string
+    age?: IntWithAggregatesFilter<"Dog"> | number
+    size?: StringWithAggregatesFilter<"Dog"> | string
+    gender?: StringWithAggregatesFilter<"Dog"> | string
+    description?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    isAdopted?: BoolWithAggregatesFilter<"Dog"> | boolean
+    imageUrl?: StringNullableWithAggregatesFilter<"Dog"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Dog"> | Date | string
+    ownerId?: IntNullableWithAggregatesFilter<"Dog"> | number | null
+  }
+
   export type UserCreateInput = {
     email: string
     name?: string | null
     posts?: PostCreateNestedManyWithoutAuthorInput
+    dogs?: DogCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -3413,12 +4879,14 @@ export namespace Prisma {
     email: string
     name?: string | null
     posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+    dogs?: DogUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUpdateInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     posts?: PostUpdateManyWithoutAuthorNestedInput
+    dogs?: DogUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -3426,6 +4894,7 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
     posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
+    dogs?: DogUncheckedUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -3497,6 +4966,107 @@ export namespace Prisma {
     authorId?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
+  export type DogCreateInput = {
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    owner?: UserCreateNestedOneWithoutDogsInput
+  }
+
+  export type DogUncheckedCreateInput = {
+    id?: number
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerId?: number | null
+  }
+
+  export type DogUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    owner?: UserUpdateOneWithoutDogsNestedInput
+  }
+
+  export type DogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type DogCreateManyInput = {
+    id?: number
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    ownerId?: number | null
+  }
+
+  export type DogUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ownerId?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -3544,12 +5114,22 @@ export namespace Prisma {
     none?: PostWhereInput
   }
 
+  export type DogListRelationFilter = {
+    every?: DogWhereInput
+    some?: DogWhereInput
+    none?: DogWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type PostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DogOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -3710,6 +5290,101 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type DogCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    breed?: SortOrder
+    age?: SortOrder
+    size?: SortOrder
+    gender?: SortOrder
+    description?: SortOrder
+    isAdopted?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type DogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    age?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type DogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    breed?: SortOrder
+    age?: SortOrder
+    size?: SortOrder
+    gender?: SortOrder
+    description?: SortOrder
+    isAdopted?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type DogMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    breed?: SortOrder
+    age?: SortOrder
+    size?: SortOrder
+    gender?: SortOrder
+    description?: SortOrder
+    isAdopted?: SortOrder
+    imageUrl?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type DogSumOrderByAggregateInput = {
+    id?: SortOrder
+    age?: SortOrder
+    ownerId?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type PostCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
@@ -3717,11 +5392,25 @@ export namespace Prisma {
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
+  export type DogCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<DogCreateWithoutOwnerInput, DogUncheckedCreateWithoutOwnerInput> | DogCreateWithoutOwnerInput[] | DogUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: DogCreateOrConnectWithoutOwnerInput | DogCreateOrConnectWithoutOwnerInput[]
+    createMany?: DogCreateManyOwnerInputEnvelope
+    connect?: DogWhereUniqueInput | DogWhereUniqueInput[]
+  }
+
   export type PostUncheckedCreateNestedManyWithoutAuthorInput = {
     create?: XOR<PostCreateWithoutAuthorInput, PostUncheckedCreateWithoutAuthorInput> | PostCreateWithoutAuthorInput[] | PostUncheckedCreateWithoutAuthorInput[]
     connectOrCreate?: PostCreateOrConnectWithoutAuthorInput | PostCreateOrConnectWithoutAuthorInput[]
     createMany?: PostCreateManyAuthorInputEnvelope
     connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  }
+
+  export type DogUncheckedCreateNestedManyWithoutOwnerInput = {
+    create?: XOR<DogCreateWithoutOwnerInput, DogUncheckedCreateWithoutOwnerInput> | DogCreateWithoutOwnerInput[] | DogUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: DogCreateOrConnectWithoutOwnerInput | DogCreateOrConnectWithoutOwnerInput[]
+    createMany?: DogCreateManyOwnerInputEnvelope
+    connect?: DogWhereUniqueInput | DogWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -3746,6 +5435,20 @@ export namespace Prisma {
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
+  export type DogUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<DogCreateWithoutOwnerInput, DogUncheckedCreateWithoutOwnerInput> | DogCreateWithoutOwnerInput[] | DogUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: DogCreateOrConnectWithoutOwnerInput | DogCreateOrConnectWithoutOwnerInput[]
+    upsert?: DogUpsertWithWhereUniqueWithoutOwnerInput | DogUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: DogCreateManyOwnerInputEnvelope
+    set?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    disconnect?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    delete?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    connect?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    update?: DogUpdateWithWhereUniqueWithoutOwnerInput | DogUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: DogUpdateManyWithWhereWithoutOwnerInput | DogUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: DogScalarWhereInput | DogScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -3766,6 +5469,20 @@ export namespace Prisma {
     update?: PostUpdateWithWhereUniqueWithoutAuthorInput | PostUpdateWithWhereUniqueWithoutAuthorInput[]
     updateMany?: PostUpdateManyWithWhereWithoutAuthorInput | PostUpdateManyWithWhereWithoutAuthorInput[]
     deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type DogUncheckedUpdateManyWithoutOwnerNestedInput = {
+    create?: XOR<DogCreateWithoutOwnerInput, DogUncheckedCreateWithoutOwnerInput> | DogCreateWithoutOwnerInput[] | DogUncheckedCreateWithoutOwnerInput[]
+    connectOrCreate?: DogCreateOrConnectWithoutOwnerInput | DogCreateOrConnectWithoutOwnerInput[]
+    upsert?: DogUpsertWithWhereUniqueWithoutOwnerInput | DogUpsertWithWhereUniqueWithoutOwnerInput[]
+    createMany?: DogCreateManyOwnerInputEnvelope
+    set?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    disconnect?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    delete?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    connect?: DogWhereUniqueInput | DogWhereUniqueInput[]
+    update?: DogUpdateWithWhereUniqueWithoutOwnerInput | DogUpdateWithWhereUniqueWithoutOwnerInput[]
+    updateMany?: DogUpdateManyWithWhereWithoutOwnerInput | DogUpdateManyWithWhereWithoutOwnerInput[]
+    deleteMany?: DogScalarWhereInput | DogScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutPostsInput = {
@@ -3794,6 +5511,30 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserCreateNestedOneWithoutDogsInput = {
+    create?: XOR<UserCreateWithoutDogsInput, UserUncheckedCreateWithoutDogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDogsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type UserUpdateOneWithoutDogsNestedInput = {
+    create?: XOR<UserCreateWithoutDogsInput, UserUncheckedCreateWithoutDogsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutDogsInput
+    upsert?: UserUpsertWithoutDogsInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutDogsInput, UserUpdateWithoutDogsInput>, UserUncheckedUpdateWithoutDogsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -3947,6 +5688,44 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
   export type PostCreateWithoutAuthorInput = {
     title: string
     content?: string | null
@@ -3967,6 +5746,43 @@ export namespace Prisma {
 
   export type PostCreateManyAuthorInputEnvelope = {
     data: PostCreateManyAuthorInput | PostCreateManyAuthorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DogCreateWithoutOwnerInput = {
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DogUncheckedCreateWithoutOwnerInput = {
+    id?: number
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DogCreateOrConnectWithoutOwnerInput = {
+    where: DogWhereUniqueInput
+    create: XOR<DogCreateWithoutOwnerInput, DogUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type DogCreateManyOwnerInputEnvelope = {
+    data: DogCreateManyOwnerInput | DogCreateManyOwnerInput[]
     skipDuplicates?: boolean
   }
 
@@ -3997,15 +5813,51 @@ export namespace Prisma {
     authorId?: IntNullableFilter<"Post"> | number | null
   }
 
+  export type DogUpsertWithWhereUniqueWithoutOwnerInput = {
+    where: DogWhereUniqueInput
+    update: XOR<DogUpdateWithoutOwnerInput, DogUncheckedUpdateWithoutOwnerInput>
+    create: XOR<DogCreateWithoutOwnerInput, DogUncheckedCreateWithoutOwnerInput>
+  }
+
+  export type DogUpdateWithWhereUniqueWithoutOwnerInput = {
+    where: DogWhereUniqueInput
+    data: XOR<DogUpdateWithoutOwnerInput, DogUncheckedUpdateWithoutOwnerInput>
+  }
+
+  export type DogUpdateManyWithWhereWithoutOwnerInput = {
+    where: DogScalarWhereInput
+    data: XOR<DogUpdateManyMutationInput, DogUncheckedUpdateManyWithoutOwnerInput>
+  }
+
+  export type DogScalarWhereInput = {
+    AND?: DogScalarWhereInput | DogScalarWhereInput[]
+    OR?: DogScalarWhereInput[]
+    NOT?: DogScalarWhereInput | DogScalarWhereInput[]
+    id?: IntFilter<"Dog"> | number
+    name?: StringFilter<"Dog"> | string
+    breed?: StringFilter<"Dog"> | string
+    age?: IntFilter<"Dog"> | number
+    size?: StringFilter<"Dog"> | string
+    gender?: StringFilter<"Dog"> | string
+    description?: StringNullableFilter<"Dog"> | string | null
+    isAdopted?: BoolFilter<"Dog"> | boolean
+    imageUrl?: StringNullableFilter<"Dog"> | string | null
+    createdAt?: DateTimeFilter<"Dog"> | Date | string
+    updatedAt?: DateTimeFilter<"Dog"> | Date | string
+    ownerId?: IntNullableFilter<"Dog"> | number | null
+  }
+
   export type UserCreateWithoutPostsInput = {
     email: string
     name?: string | null
+    dogs?: DogCreateNestedManyWithoutOwnerInput
   }
 
   export type UserUncheckedCreateWithoutPostsInput = {
     id?: number
     email: string
     name?: string | null
+    dogs?: DogUncheckedCreateNestedManyWithoutOwnerInput
   }
 
   export type UserCreateOrConnectWithoutPostsInput = {
@@ -4027,12 +5879,56 @@ export namespace Prisma {
   export type UserUpdateWithoutPostsInput = {
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    dogs?: DogUpdateManyWithoutOwnerNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPostsInput = {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     name?: NullableStringFieldUpdateOperationsInput | string | null
+    dogs?: DogUncheckedUpdateManyWithoutOwnerNestedInput
+  }
+
+  export type UserCreateWithoutDogsInput = {
+    email: string
+    name?: string | null
+    posts?: PostCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserUncheckedCreateWithoutDogsInput = {
+    id?: number
+    email: string
+    name?: string | null
+    posts?: PostUncheckedCreateNestedManyWithoutAuthorInput
+  }
+
+  export type UserCreateOrConnectWithoutDogsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDogsInput, UserUncheckedCreateWithoutDogsInput>
+  }
+
+  export type UserUpsertWithoutDogsInput = {
+    update: XOR<UserUpdateWithoutDogsInput, UserUncheckedUpdateWithoutDogsInput>
+    create: XOR<UserCreateWithoutDogsInput, UserUncheckedCreateWithoutDogsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutDogsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutDogsInput, UserUncheckedUpdateWithoutDogsInput>
+  }
+
+  export type UserUpdateWithoutDogsInput = {
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: PostUpdateManyWithoutAuthorNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDogsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    email?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    posts?: PostUncheckedUpdateManyWithoutAuthorNestedInput
   }
 
   export type PostCreateManyAuthorInput = {
@@ -4040,6 +5936,20 @@ export namespace Prisma {
     title: string
     content?: string | null
     published?: boolean | null
+  }
+
+  export type DogCreateManyOwnerInput = {
+    id?: number
+    name: string
+    breed: string
+    age: number
+    size: string
+    gender: string
+    description?: string | null
+    isAdopted?: boolean
+    imageUrl?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type PostUpdateWithoutAuthorInput = {
@@ -4060,6 +5970,47 @@ export namespace Prisma {
     title?: StringFieldUpdateOperationsInput | string
     content?: NullableStringFieldUpdateOperationsInput | string | null
     published?: NullableBoolFieldUpdateOperationsInput | boolean | null
+  }
+
+  export type DogUpdateWithoutOwnerInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DogUncheckedUpdateWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DogUncheckedUpdateManyWithoutOwnerInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    breed?: StringFieldUpdateOperationsInput | string
+    age?: IntFieldUpdateOperationsInput | number
+    size?: StringFieldUpdateOperationsInput | string
+    gender?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    isAdopted?: BoolFieldUpdateOperationsInput | boolean
+    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
