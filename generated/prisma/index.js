@@ -156,7 +156,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/brum/Projects/brum-projects/fagammon/TCC/patamatch-back/generated/prisma",
+      "value": "/home/brum/Projects/fagammon/TCC/patamatch-back/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -170,7 +170,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/brum/Projects/brum-projects/fagammon/TCC/patamatch-back/prisma/schema.prisma",
+    "sourceFilePath": "/home/brum/Projects/fagammon/TCC/patamatch-back/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -184,11 +184,12 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "postgresql://postgres:postgres@localhost:5432/patamatch?schema=public"
+        "value": null
       }
     }
   },
