@@ -37,7 +37,6 @@ model Post {
   authorId    Int?     @map("author_id")
   dog         Dog?     @relation(fields: [dogId], references: [id])
   dogId       Int?     @map("dog_id")
-  localization PostLocalization?
 
   @@map("posts")
 }
@@ -58,19 +57,20 @@ model Dog {
   posts       Post[]
   images      DogImage[]
   favoritedBy DogFavorite[]
+  localization DogLocalization?
 
   @@map("dogs")
 }
 
-model PostLocalization {
+model DogLocalization {
   latitude  Float
   longitude Float
-  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    Int     @id @map("post_id")
+  dog       Dog     @relation(fields: [dogId], references: [id], onDelete: Cascade)
+  dogId     Int     @id @map("dog_id")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("post_localizations")
+  @@map("dog_localizations")
 }
 
 model DogImage {

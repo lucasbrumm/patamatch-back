@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { PostLocalizationService } from './post-localization.service';
+import { DogLocalizationService } from './dog-localization.service';
 import { PrismaService } from '../prisma/prisma.service';
 
-describe('PostLocalizationService', () => {
-  let service: PostLocalizationService;
+describe('DogLocalizationService', () => {
+  let service: DogLocalizationService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [PostLocalizationService, PrismaService],
+      providers: [DogLocalizationService, PrismaService],
     }).compile();
 
-    service = module.get<PostLocalizationService>(PostLocalizationService);
+    service = module.get<DogLocalizationService>(DogLocalizationService);
   });
 
   it('should be defined', () => {

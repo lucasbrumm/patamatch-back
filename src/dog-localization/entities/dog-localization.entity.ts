@@ -1,7 +1,7 @@
-export class PostLocalization {
+export class DogLocalization {
   latitude: number;
   longitude: number;
-  postId: number;
+  dogId: number;
   createdAt: Date;
   updatedAt: Date;
 }
