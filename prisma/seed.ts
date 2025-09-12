@@ -1,4 +1,4 @@
-import { PrismaClient } from '../generated/prisma';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -47,7 +47,6 @@ async function main() {
       gender: 'male',
       description: 'Cachorro muito carinhoso e brincalhão. Adora crianças e outros animais.',
       isAdopted: false,
-      imageUrl: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400',
       ownerId: user1.id,
     },
   });
@@ -63,7 +62,6 @@ async function main() {
       gender: 'female',
       description: 'Luna é muito dócil e obediente. Perfeita para famílias com crianças pequenas.',
       isAdopted: false,
-      imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400',
       ownerId: user2.id,
     },
   });
@@ -79,7 +77,6 @@ async function main() {
       gender: 'male',
       description: 'Max é calmo e tranquilo. Ideal para apartamentos e pessoas que buscam um companheiro fiel.',
       isAdopted: true,
-      imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=400',
       ownerId: user3.id,
     },
   });
@@ -95,7 +92,6 @@ async function main() {
       gender: 'female',
       description: 'Bella é jovem e energética. Precisa de espaço para correr e brincar.',
       isAdopted: false,
-      imageUrl: 'https://images.unsplash.com/photo-1605568427561-40dd23c2e5d2?w=400',
       ownerId: user1.id,
     },
   });

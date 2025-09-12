@@ -6,7 +6,7 @@ import {
 import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Dog } from '../../generated/prisma';
+import { Prisma, Dog } from '@prisma/client';
 
 @Injectable()
 export class DogsService {

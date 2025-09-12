@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Post } from '../../generated/prisma';
+import { Prisma, Post } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
@@ -30,7 +30,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -56,7 +55,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -97,7 +95,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -126,7 +123,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -158,7 +154,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -190,7 +185,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -223,7 +217,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -278,7 +271,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -311,7 +303,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -370,7 +361,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -407,7 +397,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -442,7 +431,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -477,7 +465,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },

@@ -18,7 +18,6 @@ describe('DogsService', () => {
     gender: 'male',
     description: 'Friendly dog',
     isAdopted: false,
-    imageUrl: 'https://example.com/image.jpg',
     createdAt: new Date(),
     updatedAt: new Date(),
     ownerId: 1,

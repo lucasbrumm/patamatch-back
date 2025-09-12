@@ -4,7 +4,6 @@ import {
   IsOptional,
   IsInt,
   IsBoolean,
-  IsUrl,
   Min,
   Max,
   IsIn,
@@ -39,10 +38,6 @@ export class CreateDogDto {
   @IsBoolean()
   @IsOptional()
   isAdopted?: boolean;
-
-  @IsUrl()
-  @IsOptional()
-  imageUrl?: string;
 
   @IsInt()
   @IsOptional()
