@@ -6,6 +6,7 @@ import { DogsModule } from './dogs/dogs.module';
 import { PostsModule } from './posts/posts.module';
 import { PostLocalizationModule } from './post-localization/post-localization.module';
 import { DogImagesModule } from './dog-images/dog-images.module';
+import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
 import { PrismaService } from './prisma/prisma.service';
 
 @Module({
@@ -15,6 +16,7 @@ import { PrismaService } from './prisma/prisma.service';
     PostsModule,
     PostLocalizationModule,
     DogImagesModule,
+    DogFavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

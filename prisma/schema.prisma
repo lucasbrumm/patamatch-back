@@ -19,6 +19,7 @@ model User {
   name  String?
   posts Post[]
   dogs  Dog[]
+  favoriteDogs DogFavorite[]
 
   @@map("users")
 }
@@ -56,6 +57,7 @@ model Dog {
   ownerId     Int?     @map("owner_id")
   posts       Post[]
   images      DogImage[]
+  favoritedBy DogFavorite[]
 
   @@map("dogs")
 }
@@ -83,4 +85,17 @@ model DogImage {
   dogId     Int      @map("dog_id")
 
   @@map("dog_images")
+}
+
+model DogFavorite {
+  id        Int      @default(autoincrement()) @id
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @map("user_id")
+  dog       Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)
+  dogId     Int      @map("dog_id")
+
+  @@unique([userId, dogId])
+  @@map("dog_favorites")
 }
