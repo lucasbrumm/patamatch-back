@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DogFavoritesService } from './dog-favorites.service';
 import { DogFavoritesController } from './dog-favorites.controller';
-import { PrismaModule } from '../prisma/prisma.module';
+import { PrismaModule } from '../../prisma/prisma.module';
 
 @Module({
   imports: [PrismaModule],

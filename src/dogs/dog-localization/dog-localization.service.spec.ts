@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DogLocalizationService } from './dog-localization.service';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 
 describe('DogLocalizationService', () => {
   let service: DogLocalizationService;

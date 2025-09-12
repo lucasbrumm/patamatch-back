@@ -1,5 +1,9 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateDogFavoriteDto } from './dto/create-dog-favorite.dto';
 import { UpdateDogFavoriteDto } from './dto/update-dog-favorite.dto';
 
@@ -163,7 +167,10 @@ export class DogFavoritesService {
     return favorite;
   }
 
-  async update(id: number, updateDogFavoriteDto: UpdateDogFavoriteDto): Promise<any> {
+  async update(
+    id: number,
+    updateDogFavoriteDto: UpdateDogFavoriteDto,
+  ): Promise<any> {
     await this.findOne(id);
 
     return this.prisma.dogFavorite.update({

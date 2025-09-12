@@ -15,7 +15,9 @@ import { UpdateDogLocalizationDto } from './dto/update-dog-localization.dto';
 
 @Controller('dog-localization')
 export class DogLocalizationController {
-  constructor(private readonly dogLocalizationService: DogLocalizationService) {}
+  constructor(
+    private readonly dogLocalizationService: DogLocalizationService,
+  ) {}
 
   @Post()
   create(@Body() createDogLocalizationDto: CreateDogLocalizationDto) {

@@ -81,6 +81,7 @@ export class DogImagesController {
 
   @Get()
   findAll() {
+    console.log('findAll');
     return this.dogImagesService.findAll();
   }
 

@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { PrismaService } from '../../prisma/prisma.service';
 import { CreateDogLocalizationDto } from './dto/create-dog-localization.dto';
 import { UpdateDogLocalizationDto } from './dto/update-dog-localization.dto';
 
