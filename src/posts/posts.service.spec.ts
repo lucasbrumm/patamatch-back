@@ -126,8 +126,14 @@ describe('PostsService', () => {
         dogId: 1,
       };
 
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'Maria' });
-      mockPrismaService.dog.findUnique.mockResolvedValue({ id: 1, name: 'Rex' });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'Maria',
+      });
+      mockPrismaService.dog.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'Rex',
+      });
       mockPrismaService.post.create.mockResolvedValue(mockPost);
 
       const result = await service.create(createPostDto);
@@ -168,7 +174,9 @@ describe('PostsService', () => {
 
       mockPrismaService.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.create(createPostDto)).rejects.toThrow(NotFoundException);
+      await expect(service.create(createPostDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw NotFoundException when dog not found', async () => {
@@ -179,10 +187,15 @@ describe('PostsService', () => {
         dogId: 999,
       };
 
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'Maria' });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'Maria',
+      });
       mockPrismaService.dog.findUnique.mockResolvedValue(null);
 
-      await expect(service.create(createPostDto)).rejects.toThrow(NotFoundException);
+      await expect(service.create(createPostDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -233,7 +246,9 @@ describe('PostsService', () => {
         code: 'P2025',
       });
 
-      await expect(service.update(999, updatePostDto)).rejects.toThrow(NotFoundException);
+      await expect(service.update(999, updatePostDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -281,7 +296,10 @@ describe('PostsService', () => {
 
   describe('publish', () => {
     it('should publish a post successfully', async () => {
-      mockPrismaService.post.update.mockResolvedValue({ ...mockPost, published: true });
+      mockPrismaService.post.update.mockResolvedValue({
+        ...mockPost,
+        published: true,
+      });
 
       const result = await service.publish(1);
 
@@ -316,7 +334,10 @@ describe('PostsService', () => {
 
   describe('unpublish', () => {
     it('should unpublish a post successfully', async () => {
-      mockPrismaService.post.update.mockResolvedValue({ ...mockPost, published: false });
+      mockPrismaService.post.update.mockResolvedValue({
+        ...mockPost,
+        published: false,
+      });
 
       const result = await service.unpublish(1);
 

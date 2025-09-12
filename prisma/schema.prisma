@@ -19,6 +19,8 @@ model User {
   name  String?
   posts Post[]
   dogs  Dog[]
+
+  @@map("users")
 }
 
 model Post {
@@ -26,14 +28,17 @@ model Post {
   title       String
   content     String?
   published   Boolean  @default(false)
-  postType    String   @default("general") // "adoption", "general", "update"
-  imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  postType    String   @default("general") @map("post_type") // "adoption", "general", "update"
+  imageUrl    String?  @map("image_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
   author      User?    @relation(fields: [authorId], references: [id])
-  authorId    Int?
+  authorId    Int?     @map("author_id")
   dog         Dog?     @relation(fields: [dogId], references: [id])
-  dogId       Int?
+  dogId       Int?     @map("dog_id")
+  localization PostLocalization?
+
+  @@map("posts")
 }
 
 model Dog {
@@ -44,11 +49,39 @@ model Dog {
   size        String   // "small", "medium", "large"
   gender      String   // "male", "female"
   description String?
-  isAdopted   Boolean  @default(false)
-  imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  isAdopted   Boolean  @default(false) @map("is_adopted")
+  imageUrl    String?  @map("image_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
   owner       User?    @relation(fields: [ownerId], references: [id])
-  ownerId     Int?
+  ownerId     Int?     @map("owner_id")
   posts       Post[]
+  images      DogImage[]
+
+  @@map("dogs")
+}
+
+model PostLocalization {
+  latitude  Float
+  longitude Float
+  post      Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int     @id @map("post_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("post_localizations")
+}
+
+model DogImage {
+  id        Int      @default(autoincrement()) @id
+  imageData String   @map("image_data") // Base64 encoded image
+  mimeType  String   @map("mime_type") // e.g., "image/jpeg", "image/png"
+  filename  String?  // Original filename
+  size      Int?     // File size in bytes
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  dog       Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)
+  dogId     Int      @map("dog_id")
+
+  @@map("dog_images")
 }

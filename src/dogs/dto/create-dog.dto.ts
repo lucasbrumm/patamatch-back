@@ -1,4 +1,14 @@
-import { IsString, IsNotEmpty, IsOptional, IsInt, IsBoolean, IsUrl, Min, Max, IsIn } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsInt,
+  IsBoolean,
+  IsUrl,
+  Min,
+  Max,
+  IsIn,
+} from 'class-validator';
 
 export class CreateDogDto {
   @IsString()

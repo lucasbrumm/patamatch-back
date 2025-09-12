@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from '../prisma/prisma.service';
@@ -241,7 +241,9 @@ export class PostsService {
           where: { id: createPostDto.authorId },
         });
         if (!author) {
-          throw new NotFoundException(`User with ID ${createPostDto.authorId} not found`);
+          throw new NotFoundException(
+            `User with ID ${createPostDto.authorId} not found`,
+          );
         }
       }
 
@@ -251,7 +253,9 @@ export class PostsService {
           where: { id: createPostDto.dogId },
         });
         if (!dog) {
-          throw new NotFoundException(`Dog with ID ${createPostDto.dogId} not found`);
+          throw new NotFoundException(
+            `Dog with ID ${createPostDto.dogId} not found`,
+          );
         }
       }
 
@@ -328,7 +332,9 @@ export class PostsService {
           where: { id: updatePostDto.authorId },
         });
         if (!author) {
-          throw new NotFoundException(`User with ID ${updatePostDto.authorId} not found`);
+          throw new NotFoundException(
+            `User with ID ${updatePostDto.authorId} not found`,
+          );
         }
       }
 
@@ -338,7 +344,9 @@ export class PostsService {
           where: { id: updatePostDto.dogId },
         });
         if (!dog) {
-          throw new NotFoundException(`Dog with ID ${updatePostDto.dogId} not found`);
+          throw new NotFoundException(
+            `Dog with ID ${updatePostDto.dogId} not found`,
+          );
         }
       }
 
