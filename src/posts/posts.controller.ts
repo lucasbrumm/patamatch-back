@@ -32,8 +32,11 @@ export class PostsController {
   }
 
   @Get('/published')
-  findPublished() {
-    return this.postsService.findPublished();
+  findPublished(@Query() query: any) {
+    console.log('query :>> ', query);
+    const page = query.page ? parseInt(query.page, 10) : 1;
+    const limit = query.limit ? parseInt(query.limit, 10) : 4;
+    return this.postsService.findPublished(page, limit);
   }
 
   @Get('/type/:postType')

@@ -101,49 +101,74 @@ export class PostsService {
     });
   }
 
-  async findPublished(): Promise<Post[]> {
-    const posts = await this.prisma.post.findMany({
-      where: {
-        published: true,
-      },
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
+  async findPublished(
+    page: number = 1,
+    limit: number = 4,
+  ): Promise<{
+    content: Post[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+      hasNext: boolean;
+      hasPrev: boolean;
+    };
+  }> {
+    const skip = (page - 1) * limit;
+
+    // Buscar posts com paginação
+    const [posts, total] = await Promise.all([
+      this.prisma.post.findMany({
+        where: {
+          published: true,
         },
-        dog: {
-          select: {
-            id: true,
-            name: true,
-            breed: true,
-            age: true,
-            size: true,
-            gender: true,
-            isAdopted: true,
-            images: {
-              where: {
-                order: 1,
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          dog: {
+            select: {
+              id: true,
+              name: true,
+              breed: true,
+              age: true,
+              size: true,
+              gender: true,
+              isAdopted: true,
+              images: {
+                where: {
+                  order: 1,
+                },
+                select: {
+                  imageData: true,
+                  mimeType: true,
+                  filename: true,
+                },
+                take: 1,
               },
-              select: {
-                imageData: true,
-                mimeType: true,
-                filename: true,
-              },
-              take: 1,
             },
           },
         },
-      },
-      orderBy: {
-        createdAt: 'desc',
-      },
-    });
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.post.count({
+        where: {
+          published: true,
+        },
+      }),
+    ]);
 
     // Transformar o array de imagens em um objeto único (primeira imagem)
-    return posts.map((post) => ({
+    const transformedPosts = posts.map((post) => ({
       ...post,
       dog: {
         ...post.dog,
@@ -151,6 +176,20 @@ export class PostsService {
         images: undefined, // Remover o array de imagens
       },
     }));
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      content: transformedPosts,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1,
+      },
+    };
   }
 
   async findByAuthor(authorId: number): Promise<Post[]> {
