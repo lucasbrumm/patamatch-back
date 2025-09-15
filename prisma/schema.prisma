@@ -19,7 +19,7 @@ model User {
   name  String?
   posts Post[]
   dogs  Dog[]
-  favoriteDogs DogFavorite[]
+  favoritePosts PostFavorite[]
 
   @@map("users")
 }
@@ -36,6 +36,7 @@ model Post {
   authorId    Int?     @map("author_id")
   dog         Dog      @relation(fields: [dogId], references: [id])
   dogId       Int      @map("dog_id")
+  favoritedBy PostFavorite[]
 
   @@map("posts")
 }
@@ -55,7 +56,6 @@ model Dog {
   ownerId     Int?     @map("owner_id")
   posts       Post[]
   images      DogImage[]
-  favoritedBy DogFavorite[]
   localization DogLocalization?
 
   @@map("dogs")
@@ -87,15 +87,15 @@ model DogImage {
   @@map("dog_images")
 }
 
-model DogFavorite {
+model PostFavorite {
   id        Int      @default(autoincrement()) @id
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    Int      @map("user_id")
-  dog       Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)
-  dogId     Int      @map("dog_id")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId    Int      @map("post_id")
 
-  @@unique([userId, dogId])
-  @@map("dog_favorites")
+  @@unique([userId, postId])
+  @@map("post_favorites")
 }

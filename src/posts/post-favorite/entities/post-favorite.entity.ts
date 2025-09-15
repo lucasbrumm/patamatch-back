@@ -1,7 +1,7 @@
-export class DogFavorite {
+export class PostFavorite {
   id: number;
   createdAt: Date;
   updatedAt: Date;
   userId: number;
-  dogId: number;
+  postId: number;
 }

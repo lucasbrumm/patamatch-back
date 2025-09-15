@@ -104,8 +104,9 @@ export class PostsService {
   async findPublished(
     page: number = 1,
     limit: number = 4,
+    userId?: number,
   ): Promise<{
-    content: Post[];
+    content: any[];
     pagination: {
       page: number;
       limit: number;
@@ -117,7 +118,6 @@ export class PostsService {
   }> {
     const skip = (page - 1) * limit;
 
-    // Buscar posts com paginação
     const [posts, total] = await Promise.all([
       this.prisma.post.findMany({
         where: {
@@ -167,13 +167,22 @@ export class PostsService {
       }),
     ]);
 
-    // Transformar o array de imagens em um objeto único (primeira imagem)
+    let userFavorites: number[] = [];
+    if (userId) {
+      const favorites = await this.prisma.postFavorite.findMany({
+        where: { userId },
+        select: { postId: true },
+      });
+      userFavorites = favorites.map((fav) => fav.postId);
+    }
+
     const transformedPosts = posts.map((post) => ({
       ...post,
+      isFavorite: userId ? userFavorites.includes(post.id) : false,
       dog: {
         ...post.dog,
         firstImage: post.dog.images[0] || null,
-        images: undefined, // Remover o array de imagens
+        images: undefined,
       },
     }));
 

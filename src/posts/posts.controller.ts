@@ -33,10 +33,14 @@ export class PostsController {
   }
 
   @Get('/published')
-  findPublished(@Query() query: PaginationDto) {
+  findPublished(@Query() query: any) {
     const page = query.page ? parseInt(query.page.toString(), 10) : 1;
     const limit = query.limit ? parseInt(query.limit.toString(), 10) : 4;
-    return this.postsService.findPublished(page, limit);
+    const userId = query.userId
+      ? parseInt(query.userId.toString(), 10)
+      : undefined;
+
+    return this.postsService.findPublished(page, limit, userId);
   }
 
   @Get('/type/:postType')

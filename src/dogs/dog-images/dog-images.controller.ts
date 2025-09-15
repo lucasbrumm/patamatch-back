@@ -32,7 +32,6 @@ export class DogImagesController {
     @Param('dogId', ParseIntPipe) dogId: number,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<any> {
-    // Converter buffer para base64
     const base64Data = file.buffer.toString('base64');
     const dataUrl = `data:${file.mimetype};base64,${base64Data}`;
 
@@ -96,10 +95,27 @@ export class DogImagesController {
   }
 
   @Patch(':id')
-  update(
+  @UseInterceptors(FileInterceptor('image'), ImageUploadInterceptor)
+  async update(
     @Param('id', ParseIntPipe) id: number,
+    @UploadedFile() file: Express.Multer.File,
     @Body() updateDogImageDto: UpdateDogImageDto,
-  ) {
+  ): Promise<any> {
+    if (file) {
+      const base64Data = file.buffer.toString('base64');
+      const dataUrl = `data:${file.mimetype};base64,${base64Data}`;
+
+      const updatedDto: UpdateDogImageDto = {
+        ...updateDogImageDto,
+        imageData: dataUrl,
+        mimeType: file.mimetype,
+        filename: file.originalname,
+        size: file.size,
+      };
+
+      return this.dogImagesService.update(id, updatedDto);
+    }
+
     return this.dogImagesService.update(id, updateDogImageDto);
   }
 

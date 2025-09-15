@@ -1,16 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DogFavoritesService } from './dog-favorites.service';
+import { PostFavoritesService } from './post-favorite.service';
 import { PrismaService } from '../../prisma/prisma.service';
 
-describe('DogFavoritesService', () => {
-  let service: DogFavoritesService;
+describe('PostFavoritesService', () => {
+  let service: PostFavoritesService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DogFavoritesService, PrismaService],
+      providers: [PostFavoritesService, PrismaService],
     }).compile();
 
-    service = module.get<DogFavoritesService>(DogFavoritesService);
+    service = module.get<PostFavoritesService>(PostFavoritesService);
   });
 
   it('should be defined', () => {

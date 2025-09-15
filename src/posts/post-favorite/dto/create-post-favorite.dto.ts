@@ -1,11 +1,11 @@
 import { IsInt, IsNotEmpty } from 'class-validator';
 
-export class CreateDogFavoriteDto {
+export class CreatePostFavoriteDto {
   @IsInt()
   @IsNotEmpty()
   userId: number;
 
   @IsInt()
   @IsNotEmpty()
-  dogId: number;
+  postId: number;
 }

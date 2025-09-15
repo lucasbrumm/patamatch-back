@@ -22,4 +22,7 @@ export class PaginationDto {
   @Min(1)
   @Max(50)
   limit?: number = 4;
+
+  @IsOptional()
+  userId?: string;
 }
