@@ -102,7 +102,7 @@ export class PostsService {
   }
 
   async findPublished(): Promise<Post[]> {
-    return this.prisma.post.findMany({
+    const posts = await this.prisma.post.findMany({
       where: {
         published: true,
       },
@@ -123,6 +123,17 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
+            images: {
+              where: {
+                order: 1,
+              },
+              select: {
+                imageData: true,
+                mimeType: true,
+                filename: true,
+              },
+              take: 1,
+            },
           },
         },
       },
@@ -130,6 +141,16 @@ export class PostsService {
         createdAt: 'desc',
       },
     });
+
+    // Transformar o array de imagens em um objeto único (primeira imagem)
+    return posts.map((post) => ({
+      ...post,
+      dog: {
+        ...post.dog,
+        firstImage: post.dog.images[0] || null,
+        images: undefined, // Remover o array de imagens
+      },
+    }));
   }
 
   async findByAuthor(authorId: number): Promise<Post[]> {
