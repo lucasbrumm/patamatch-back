@@ -45,7 +45,8 @@ async function main() {
       age: 3,
       size: 'large',
       gender: 'male',
-      description: 'Cachorro muito carinhoso e brincalhão. Adora crianças e outros animais.',
+      description:
+        'Cachorro muito carinhoso e brincalhão. Adora crianças e outros animais.',
       isAdopted: false,
       ownerId: user1.id,
     },
@@ -60,7 +61,8 @@ async function main() {
       age: 2,
       size: 'medium',
       gender: 'female',
-      description: 'Luna é muito dócil e obediente. Perfeita para famílias com crianças pequenas.',
+      description:
+        'Luna é muito dócil e obediente. Perfeita para famílias com crianças pequenas.',
       isAdopted: false,
       ownerId: user2.id,
     },
@@ -75,7 +77,8 @@ async function main() {
       age: 4,
       size: 'small',
       gender: 'male',
-      description: 'Max é calmo e tranquilo. Ideal para apartamentos e pessoas que buscam um companheiro fiel.',
+      description:
+        'Max é calmo e tranquilo. Ideal para apartamentos e pessoas que buscam um companheiro fiel.',
       isAdopted: true,
       ownerId: user3.id,
     },
@@ -90,7 +93,8 @@ async function main() {
       age: 1,
       size: 'large',
       gender: 'female',
-      description: 'Bella é jovem e energética. Precisa de espaço para correr e brincar.',
+      description:
+        'Bella é jovem e energética. Precisa de espaço para correr e brincar.',
       isAdopted: false,
       ownerId: user1.id,
     },
@@ -104,10 +108,10 @@ async function main() {
     update: {},
     create: {
       title: 'Rex procura uma família amorosa',
-      content: 'Rex é um Golden Retriever de 3 anos que está procurando uma família que possa dar muito amor e carinho. Ele é muito brincalhão e adora crianças.',
+      content:
+        'Rex é um Golden Retriever de 3 anos que está procurando uma família que possa dar muito amor e carinho. Ele é muito brincalhão e adora crianças.',
       published: true,
       postType: 'adoption',
-      imageUrl: 'https://images.unsplash.com/photo-1552053831-71594a27632d?w=600',
       authorId: user1.id,
       dogId: dog1.id,
     },
@@ -118,10 +122,10 @@ async function main() {
     update: {},
     create: {
       title: 'Luna - Cachorra para adoção',
-      content: 'Luna é uma Labrador de 2 anos, muito dócil e obediente. Ela seria perfeita para uma família com crianças pequenas.',
+      content:
+        'Luna é uma Labrador de 2 anos, muito dócil e obediente. Ela seria perfeita para uma família com crianças pequenas.',
       published: true,
       postType: 'adoption',
-      imageUrl: 'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600',
       authorId: user2.id,
       dogId: dog2.id,
     },
@@ -132,10 +136,10 @@ async function main() {
     update: {},
     create: {
       title: 'Max foi adotado! 🎉',
-      content: 'É com grande alegria que anunciamos que Max encontrou sua família para sempre! Obrigado a todos que se interessaram.',
+      content:
+        'É com grande alegria que anunciamos que Max encontrou sua família para sempre! Obrigado a todos que se interessaram.',
       published: true,
       postType: 'update',
-      imageUrl: 'https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=600',
       authorId: user3.id,
       dogId: dog3.id,
     },
@@ -146,10 +150,12 @@ async function main() {
     update: {},
     create: {
       title: 'Dicas para cuidar de filhotes',
-      content: 'Aqui estão algumas dicas importantes para quem está pensando em adotar um filhote: alimentação adequada, vacinação, socialização e muito amor!',
+      content:
+        'Aqui estão algumas dicas importantes para quem está pensando em adotar um filhote: alimentação adequada, vacinação, socialização e muito amor!',
       published: true,
       postType: 'general',
       authorId: user1.id,
+      dogId: dog1.id, // Associando ao primeiro cachorro
     },
   });
 
@@ -158,10 +164,10 @@ async function main() {
     update: {},
     create: {
       title: 'Bella precisa de exercícios',
-      content: 'Bella é uma Pastor Alemão jovem e cheia de energia. Ela precisa de uma família ativa que possa proporcionar exercícios regulares.',
+      content:
+        'Bella é uma Pastor Alemão jovem e cheia de energia. Ela precisa de uma família ativa que possa proporcionar exercícios regulares.',
       published: false,
       postType: 'adoption',
-      imageUrl: 'https://images.unsplash.com/photo-1605568427561-40dd23c2e5d2?w=600',
       authorId: user1.id,
       dogId: dog4.id,
     },
@@ -184,4 +190,3 @@ main()
   .finally(async () => {
     await prisma.$disconnect();
   });
-

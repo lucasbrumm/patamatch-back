@@ -30,13 +30,12 @@ model Post {
   content     String?
   published   Boolean  @default(false)
   postType    String   @default("general") @map("post_type") // "adoption", "general", "update"
-  imageUrl    String?  @map("image_url")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
   author      User?    @relation(fields: [authorId], references: [id])
   authorId    Int?     @map("author_id")
-  dog         Dog?     @relation(fields: [dogId], references: [id])
-  dogId       Int?     @map("dog_id")
+  dog         Dog      @relation(fields: [dogId], references: [id])
+  dogId       Int      @map("dog_id")
 
   @@map("posts")
 }
@@ -79,6 +78,7 @@ model DogImage {
   mimeType  String   @map("mime_type") // e.g., "image/jpeg", "image/png"
   filename  String?  // Original filename
   size      Int?     // File size in bytes
+  order     Int      @default(1) // Order of image (1-8)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   dog       Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)

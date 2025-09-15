@@ -1,4 +1,11 @@
-import { IsString, IsNotEmpty, IsOptional, IsInt, Min } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsInt,
+  Min,
+  Max,
+} from 'class-validator';
 
 export class CreateDogImageDto {
   @IsString()
@@ -21,4 +28,10 @@ export class CreateDogImageDto {
   @IsInt()
   @IsNotEmpty()
   dogId: number;
+
+  @IsInt()
+  @IsOptional()
+  @Min(1)
+  @Max(8)
+  order?: number; // Order of image (1-8), defaults to 1
 }

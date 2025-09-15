@@ -166,6 +166,7 @@ describe('PostsService', () => {
         title: 'Novo post',
         content: 'Conteúdo',
         authorId: 999,
+        dogId: 1,
       };
 
       mockPrismaService.user.findUnique.mockResolvedValue(null);
