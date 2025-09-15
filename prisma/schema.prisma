@@ -88,13 +88,14 @@ model DogImage {
 }
 
 model PostFavorite {
-  id        Int      @default(autoincrement()) @id
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int      @map("user_id")
-  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
-  postId    Int      @map("post_id")
+  id         Int      @default(autoincrement()) @id
+  isFavorite Boolean  @default(true) @map("is_favorite")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int      @map("user_id")
+  post       Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId     Int      @map("post_id")
 
   @@unique([userId, postId])
   @@map("post_favorites")
