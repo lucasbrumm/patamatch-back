@@ -1,4 +1,4 @@
-import { IsInt, IsNotEmpty } from 'class-validator';
+import { IsInt, IsNotEmpty, IsOptional, IsBoolean } from 'class-validator';
 
 export class CreatePostFavoriteDto {
   @IsInt()
@@ -8,4 +8,8 @@ export class CreatePostFavoriteDto {
   @IsInt()
   @IsNotEmpty()
   postId: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isFavorite?: boolean = true;
 }

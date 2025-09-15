@@ -41,11 +41,39 @@ export class PostFavoritesService {
     });
 
     if (existingFavorite) {
-      throw new ConflictException('Post is already in favorites');
+      // Se já existe, atualizar o status de isFavorite
+      return this.prisma.postFavorite.update({
+        where: {
+          userId_postId: {
+            userId: createPostFavoriteDto.userId,
+            postId: createPostFavoriteDto.postId,
+          },
+        },
+        data: {
+          isFavorite: createPostFavoriteDto.isFavorite ?? true,
+        },
+        include: {
+          user: true,
+          post: {
+            include: {
+              dog: {
+                include: {
+                  images: true,
+                  owner: true,
+                },
+              },
+              author: true,
+            },
+          },
+        },
+      });
     }
 
     return this.prisma.postFavorite.create({
-      data: createPostFavoriteDto,
+      data: {
+        ...createPostFavoriteDto,
+        isFavorite: createPostFavoriteDto.isFavorite ?? true,
+      },
       include: {
         user: true,
         post: {
@@ -282,6 +310,155 @@ export class PostFavoritesService {
 
     return this.prisma.postFavorite.deleteMany({
       where: { postId },
+    });
+  }
+
+  // Método para fazer toggle do status de favorito
+  async toggleFavorite(userId: number, postId: number): Promise<any> {
+    // Verificar se o usuário existe
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    // Verificar se o post existe
+    const post = await this.prisma.post.findUnique({
+      where: { id: postId },
+    });
+
+    if (!post) {
+      throw new NotFoundException('Post not found');
+    }
+
+    // Verificar se já existe o favorito
+    const existingFavorite = await this.prisma.postFavorite.findUnique({
+      where: {
+        userId_postId: {
+          userId,
+          postId,
+        },
+      },
+    });
+
+    if (existingFavorite) {
+      // Se já existe, fazer toggle do status
+      return this.prisma.postFavorite.update({
+        where: {
+          userId_postId: {
+            userId,
+            postId,
+          },
+        },
+        data: {
+          isFavorite: !existingFavorite.isFavorite,
+        },
+        include: {
+          user: true,
+          post: {
+            include: {
+              dog: {
+                include: {
+                  images: true,
+                  owner: true,
+                },
+              },
+              author: true,
+            },
+          },
+        },
+      });
+    } else {
+      // Se não existe, criar como favorito
+      return this.prisma.postFavorite.create({
+        data: {
+          userId,
+          postId,
+          isFavorite: true,
+        },
+        include: {
+          user: true,
+          post: {
+            include: {
+              dog: {
+                include: {
+                  images: true,
+                  owner: true,
+                },
+              },
+              author: true,
+            },
+          },
+        },
+      });
+    }
+  }
+
+  // Método para buscar apenas favoritos ativos de um usuário
+  async findActiveFavoritesByUserId(userId: number): Promise<any[]> {
+    // Verificar se o usuário existe
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.prisma.postFavorite.findMany({
+      where: {
+        userId,
+        isFavorite: true,
+      },
+      include: {
+        user: true,
+        post: {
+          include: {
+            dog: {
+              include: {
+                images: true,
+                owner: true,
+              },
+            },
+            author: true,
+          },
+        },
+      },
+    });
+  }
+
+  // Método para buscar histórico completo de favoritos de um usuário (incluindo removidos)
+  async findHistoryByUserId(userId: number): Promise<any[]> {
+    // Verificar se o usuário existe
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.prisma.postFavorite.findMany({
+      where: { userId },
+      include: {
+        user: true,
+        post: {
+          include: {
+            dog: {
+              include: {
+                images: true,
+                owner: true,
+              },
+            },
+            author: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
   }
 }

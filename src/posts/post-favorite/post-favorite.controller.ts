@@ -79,4 +79,25 @@ export class PostFavoritesController {
   removeByPostId(@Param('postId', ParseIntPipe) postId: number) {
     return this.postFavoritesService.removeByPostId(postId);
   }
+
+  // Novo endpoint para fazer toggle do status de favorito
+  @Post('toggle/user/:userId/post/:postId')
+  toggleFavorite(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('postId', ParseIntPipe) postId: number,
+  ) {
+    return this.postFavoritesService.toggleFavorite(userId, postId);
+  }
+
+  // Novo endpoint para buscar apenas favoritos ativos de um usuário
+  @Get('active/user/:userId')
+  findActiveFavoritesByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.postFavoritesService.findActiveFavoritesByUserId(userId);
+  }
+
+  // Novo endpoint para buscar histórico completo de favoritos de um usuário
+  @Get('history/user/:userId')
+  findHistoryByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.postFavoritesService.findHistoryByUserId(userId);
+  }
 }

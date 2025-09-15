@@ -170,7 +170,10 @@ export class PostsService {
     let userFavorites: number[] = [];
     if (userId) {
       const favorites = await this.prisma.postFavorite.findMany({
-        where: { userId },
+        where: {
+          userId,
+          isFavorite: true, // Apenas favoritos ativos
+        },
         select: { postId: true },
       });
       userFavorites = favorites.map((fav) => fav.postId);
