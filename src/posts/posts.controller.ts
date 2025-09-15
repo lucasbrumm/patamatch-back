@@ -11,6 +11,7 @@ import {
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { PaginationDto } from './dto/pagination.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -32,10 +33,9 @@ export class PostsController {
   }
 
   @Get('/published')
-  findPublished(@Query() query: any) {
-    console.log('query :>> ', query);
-    const page = query.page ? parseInt(query.page, 10) : 1;
-    const limit = query.limit ? parseInt(query.limit, 10) : 4;
+  findPublished(@Query() query: PaginationDto) {
+    const page = query.page ? parseInt(query.page.toString(), 10) : 1;
+    const limit = query.limit ? parseInt(query.limit.toString(), 10) : 4;
     return this.postsService.findPublished(page, limit);
   }
 
