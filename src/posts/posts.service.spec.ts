@@ -15,7 +15,6 @@ describe('PostsService', () => {
     content: 'Rex é um cachorro muito amigável que precisa de um lar amoroso.',
     published: true,
     postType: 'adoption',
-    imageUrl: 'https://example.com/rex.jpg',
     createdAt: new Date(),
     updatedAt: new Date(),
     authorId: 1,
@@ -33,7 +32,6 @@ describe('PostsService', () => {
       size: 'large',
       gender: 'male',
       isAdopted: false,
-      imageUrl: 'https://example.com/rex.jpg',
     },
   };
 
@@ -102,7 +100,6 @@ describe('PostsService', () => {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -126,8 +123,14 @@ describe('PostsService', () => {
         dogId: 1,
       };
 
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'Maria' });
-      mockPrismaService.dog.findUnique.mockResolvedValue({ id: 1, name: 'Rex' });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'Maria',
+      });
+      mockPrismaService.dog.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'Rex',
+      });
       mockPrismaService.post.create.mockResolvedValue(mockPost);
 
       const result = await service.create(createPostDto);
@@ -152,7 +155,6 @@ describe('PostsService', () => {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -164,11 +166,14 @@ describe('PostsService', () => {
         title: 'Novo post',
         content: 'Conteúdo',
         authorId: 999,
+        dogId: 1,
       };
 
       mockPrismaService.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.create(createPostDto)).rejects.toThrow(NotFoundException);
+      await expect(service.create(createPostDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
 
     it('should throw NotFoundException when dog not found', async () => {
@@ -179,10 +184,15 @@ describe('PostsService', () => {
         dogId: 999,
       };
 
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'Maria' });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'Maria',
+      });
       mockPrismaService.dog.findUnique.mockResolvedValue(null);
 
-      await expect(service.create(createPostDto)).rejects.toThrow(NotFoundException);
+      await expect(service.create(createPostDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -217,7 +227,6 @@ describe('PostsService', () => {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -233,7 +242,9 @@ describe('PostsService', () => {
         code: 'P2025',
       });
 
-      await expect(service.update(999, updatePostDto)).rejects.toThrow(NotFoundException);
+      await expect(service.update(999, updatePostDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -263,7 +274,6 @@ describe('PostsService', () => {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -281,7 +291,10 @@ describe('PostsService', () => {
 
   describe('publish', () => {
     it('should publish a post successfully', async () => {
-      mockPrismaService.post.update.mockResolvedValue({ ...mockPost, published: true });
+      mockPrismaService.post.update.mockResolvedValue({
+        ...mockPost,
+        published: true,
+      });
 
       const result = await service.publish(1);
 
@@ -306,7 +319,6 @@ describe('PostsService', () => {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -316,7 +328,10 @@ describe('PostsService', () => {
 
   describe('unpublish', () => {
     it('should unpublish a post successfully', async () => {
-      mockPrismaService.post.update.mockResolvedValue({ ...mockPost, published: false });
+      mockPrismaService.post.update.mockResolvedValue({
+        ...mockPost,
+        published: false,
+      });
 
       const result = await service.unpublish(1);
 
@@ -341,7 +356,6 @@ describe('PostsService', () => {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },

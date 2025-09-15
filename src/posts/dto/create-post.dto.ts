@@ -1,4 +1,11 @@
-import { IsString, IsNotEmpty, IsOptional, IsBoolean, IsUrl, IsIn, IsInt } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsBoolean,
+  IsIn,
+  IsInt,
+} from 'class-validator';
 
 export class CreatePostDto {
   @IsString()
@@ -18,15 +25,11 @@ export class CreatePostDto {
   @IsOptional()
   postType?: string;
 
-  @IsUrl()
-  @IsOptional()
-  imageUrl?: string;
-
   @IsInt()
   @IsOptional()
   authorId?: number;
 
   @IsInt()
-  @IsOptional()
-  dogId?: number;
+  @IsNotEmpty()
+  dogId: number;
 }

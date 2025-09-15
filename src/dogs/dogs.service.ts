@@ -1,8 +1,12 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { CreateDogDto } from './dto/create-dog.dto';
 import { UpdateDogDto } from './dto/update-dog.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Dog } from '../../generated/prisma';
+import { Prisma, Dog } from '@prisma/client';
 
 @Injectable()
 export class DogsService {
@@ -107,7 +111,9 @@ export class DogsService {
           where: { id: createDogDto.ownerId },
         });
         if (!owner) {
-          throw new NotFoundException(`User with ID ${createDogDto.ownerId} not found`);
+          throw new NotFoundException(
+            `User with ID ${createDogDto.ownerId} not found`,
+          );
         }
       }
 
@@ -160,7 +166,9 @@ export class DogsService {
           where: { id: updateDogDto.ownerId },
         });
         if (!owner) {
-          throw new NotFoundException(`User with ID ${updateDogDto.ownerId} not found`);
+          throw new NotFoundException(
+            `User with ID ${updateDogDto.ownerId} not found`,
+          );
         }
       }
 
@@ -248,7 +256,10 @@ export class DogsService {
         },
       });
     } catch (error) {
-      if (error instanceof NotFoundException || error instanceof ConflictException) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof ConflictException
+      ) {
         throw error;
       }
       throw error;

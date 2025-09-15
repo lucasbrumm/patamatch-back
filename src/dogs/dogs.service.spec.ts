@@ -18,7 +18,6 @@ describe('DogsService', () => {
     gender: 'male',
     description: 'Friendly dog',
     isAdopted: false,
-    imageUrl: 'https://example.com/image.jpg',
     createdAt: new Date(),
     updatedAt: new Date(),
     ownerId: 1,
@@ -105,7 +104,10 @@ describe('DogsService', () => {
         ownerId: 1,
       };
 
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'John' });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'John',
+      });
       mockPrismaService.dog.create.mockResolvedValue(mockDog);
 
       const result = await service.create(createDogDto);
@@ -137,7 +139,9 @@ describe('DogsService', () => {
 
       mockPrismaService.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.create(createDogDto)).rejects.toThrow(NotFoundException);
+      await expect(service.create(createDogDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -176,7 +180,9 @@ describe('DogsService', () => {
         code: 'P2025',
       });
 
-      await expect(service.update(999, updateDogDto)).rejects.toThrow(NotFoundException);
+      await expect(service.update(999, updateDogDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 
@@ -213,9 +219,19 @@ describe('DogsService', () => {
   describe('adopt', () => {
     it('should adopt a dog successfully', async () => {
       const ownerId = 1;
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'John' });
-      mockPrismaService.dog.findUnique.mockResolvedValue({ ...mockDog, isAdopted: false });
-      mockPrismaService.dog.update.mockResolvedValue({ ...mockDog, isAdopted: true, ownerId });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'John',
+      });
+      mockPrismaService.dog.findUnique.mockResolvedValue({
+        ...mockDog,
+        isAdopted: false,
+      });
+      mockPrismaService.dog.update.mockResolvedValue({
+        ...mockDog,
+        isAdopted: true,
+        ownerId,
+      });
 
       const result = await service.adopt(1, ownerId);
 
@@ -230,15 +246,24 @@ describe('DogsService', () => {
     });
 
     it('should throw NotFoundException when dog not found', async () => {
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'John' });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'John',
+      });
       mockPrismaService.dog.findUnique.mockResolvedValue(null);
 
       await expect(service.adopt(999, 1)).rejects.toThrow(NotFoundException);
     });
 
     it('should throw ConflictException when dog is already adopted', async () => {
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: 1, name: 'John' });
-      mockPrismaService.dog.findUnique.mockResolvedValue({ ...mockDog, isAdopted: true });
+      mockPrismaService.user.findUnique.mockResolvedValue({
+        id: 1,
+        name: 'John',
+      });
+      mockPrismaService.dog.findUnique.mockResolvedValue({
+        ...mockDog,
+        isAdopted: true,
+      });
 
       await expect(service.adopt(1, 1)).rejects.toThrow(ConflictException);
     });

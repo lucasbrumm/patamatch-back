@@ -94,7 +94,9 @@ describe('UsersService', () => {
         code: 'P2002',
       });
 
-      await expect(service.create(createUserDto)).rejects.toThrow(ConflictException);
+      await expect(service.create(createUserDto)).rejects.toThrow(
+        ConflictException,
+      );
     });
   });
 
@@ -124,7 +126,9 @@ describe('UsersService', () => {
         code: 'P2025',
       });
 
-      await expect(service.update(999, updateUserDto)).rejects.toThrow(NotFoundException);
+      await expect(service.update(999, updateUserDto)).rejects.toThrow(
+        NotFoundException,
+      );
     });
   });
 

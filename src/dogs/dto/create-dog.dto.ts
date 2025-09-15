@@ -1,4 +1,13 @@
-import { IsString, IsNotEmpty, IsOptional, IsInt, IsBoolean, IsUrl, Min, Max, IsIn } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsInt,
+  IsBoolean,
+  Min,
+  Max,
+  IsIn,
+} from 'class-validator';
 
 export class CreateDogDto {
   @IsString()
@@ -29,10 +38,6 @@ export class CreateDogDto {
   @IsBoolean()
   @IsOptional()
   isAdopted?: boolean;
-
-  @IsUrl()
-  @IsOptional()
-  imageUrl?: string;
 
   @IsInt()
   @IsOptional()

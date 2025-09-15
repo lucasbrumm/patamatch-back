@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { Prisma, Post } from '../../generated/prisma';
+import { Prisma, Post } from '@prisma/client';
 
 @Injectable()
 export class PostsService {
@@ -30,7 +30,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -56,7 +55,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -97,43 +95,101 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
     });
   }
 
-  async findPublished(): Promise<Post[]> {
-    return this.prisma.post.findMany({
-      where: {
-        published: true,
-      },
-      include: {
-        author: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
+  async findPublished(
+    page: number = 1,
+    limit: number = 4,
+  ): Promise<{
+    content: Post[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+      hasNext: boolean;
+      hasPrev: boolean;
+    };
+  }> {
+    const skip = (page - 1) * limit;
+
+    // Buscar posts com paginação
+    const [posts, total] = await Promise.all([
+      this.prisma.post.findMany({
+        where: {
+          published: true,
+        },
+        include: {
+          author: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          dog: {
+            select: {
+              id: true,
+              name: true,
+              breed: true,
+              age: true,
+              size: true,
+              gender: true,
+              isAdopted: true,
+              images: {
+                where: {
+                  order: 1,
+                },
+                select: {
+                  imageData: true,
+                  mimeType: true,
+                  filename: true,
+                },
+                take: 1,
+              },
+            },
           },
         },
-        dog: {
-          select: {
-            id: true,
-            name: true,
-            breed: true,
-            age: true,
-            size: true,
-            gender: true,
-            isAdopted: true,
-            imageUrl: true,
-          },
+        orderBy: {
+          createdAt: 'desc',
         },
+        skip,
+        take: limit,
+      }),
+      this.prisma.post.count({
+        where: {
+          published: true,
+        },
+      }),
+    ]);
+
+    // Transformar o array de imagens em um objeto único (primeira imagem)
+    const transformedPosts = posts.map((post) => ({
+      ...post,
+      dog: {
+        ...post.dog,
+        firstImage: post.dog.images[0] || null,
+        images: undefined, // Remover o array de imagens
       },
-      orderBy: {
-        createdAt: 'desc',
+    }));
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      content: transformedPosts,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1,
       },
-    });
+    };
   }
 
   async findByAuthor(authorId: number): Promise<Post[]> {
@@ -158,7 +214,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -190,7 +245,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -223,7 +277,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -241,7 +294,9 @@ export class PostsService {
           where: { id: createPostDto.authorId },
         });
         if (!author) {
-          throw new NotFoundException(`User with ID ${createPostDto.authorId} not found`);
+          throw new NotFoundException(
+            `User with ID ${createPostDto.authorId} not found`,
+          );
         }
       }
 
@@ -251,7 +306,9 @@ export class PostsService {
           where: { id: createPostDto.dogId },
         });
         if (!dog) {
-          throw new NotFoundException(`Dog with ID ${createPostDto.dogId} not found`);
+          throw new NotFoundException(
+            `Dog with ID ${createPostDto.dogId} not found`,
+          );
         }
       }
 
@@ -274,7 +331,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -307,7 +363,6 @@ export class PostsService {
             size: true,
             gender: true,
             isAdopted: true,
-            imageUrl: true,
           },
         },
       },
@@ -328,7 +383,9 @@ export class PostsService {
           where: { id: updatePostDto.authorId },
         });
         if (!author) {
-          throw new NotFoundException(`User with ID ${updatePostDto.authorId} not found`);
+          throw new NotFoundException(
+            `User with ID ${updatePostDto.authorId} not found`,
+          );
         }
       }
 
@@ -338,7 +395,9 @@ export class PostsService {
           where: { id: updatePostDto.dogId },
         });
         if (!dog) {
-          throw new NotFoundException(`Dog with ID ${updatePostDto.dogId} not found`);
+          throw new NotFoundException(
+            `Dog with ID ${updatePostDto.dogId} not found`,
+          );
         }
       }
 
@@ -362,7 +421,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -399,7 +457,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -434,7 +491,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },
@@ -469,7 +525,6 @@ export class PostsService {
               size: true,
               gender: true,
               isAdopted: true,
-              imageUrl: true,
             },
           },
         },

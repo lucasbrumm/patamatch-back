@@ -7,7 +7,11 @@ import { PostsModule } from './posts/posts.module';
 import { PrismaService } from './prisma/prisma.service';
 
 @Module({
-  imports: [UsersModule, DogsModule, PostsModule],
+  imports: [
+    UsersModule,
+    DogsModule,
+    PostsModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
