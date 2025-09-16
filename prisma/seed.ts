@@ -102,84 +102,44 @@ async function main() {
 
   console.log('✅ Cachorros criados:', { dog1, dog2, dog3, dog4 });
 
-  // Criar posts de teste
-  const post1 = await prisma.post.upsert({
-    where: { id: 1 },
+  // Criar favoritos de teste
+  const dogFavorite1 = await prisma.dogFavorite.upsert({
+    where: {
+      userId_dogId: {
+        userId: user2.id,
+        dogId: dog1.id,
+      },
+    },
     update: {},
     create: {
-      title: 'Rex procura uma família amorosa',
-      content:
-        'Rex é um Golden Retriever de 3 anos que está procurando uma família que possa dar muito amor e carinho. Ele é muito brincalhão e adora crianças.',
-      published: true,
-      postType: 'adoption',
-      authorId: user1.id,
+      userId: user2.id,
       dogId: dog1.id,
+      isFavorite: true,
     },
   });
 
-  const post2 = await prisma.post.upsert({
-    where: { id: 2 },
+  const dogFavorite2 = await prisma.dogFavorite.upsert({
+    where: {
+      userId_dogId: {
+        userId: user3.id,
+        dogId: dog2.id,
+      },
+    },
     update: {},
     create: {
-      title: 'Luna - Cachorra para adoção',
-      content:
-        'Luna é uma Labrador de 2 anos, muito dócil e obediente. Ela seria perfeita para uma família com crianças pequenas.',
-      published: true,
-      postType: 'adoption',
-      authorId: user2.id,
+      userId: user3.id,
       dogId: dog2.id,
+      isFavorite: true,
     },
   });
 
-  const post3 = await prisma.post.upsert({
-    where: { id: 3 },
-    update: {},
-    create: {
-      title: 'Max foi adotado! 🎉',
-      content:
-        'É com grande alegria que anunciamos que Max encontrou sua família para sempre! Obrigado a todos que se interessaram.',
-      published: true,
-      postType: 'update',
-      authorId: user3.id,
-      dogId: dog3.id,
-    },
-  });
-
-  const post4 = await prisma.post.upsert({
-    where: { id: 4 },
-    update: {},
-    create: {
-      title: 'Dicas para cuidar de filhotes',
-      content:
-        'Aqui estão algumas dicas importantes para quem está pensando em adotar um filhote: alimentação adequada, vacinação, socialização e muito amor!',
-      published: true,
-      postType: 'general',
-      authorId: user1.id,
-      dogId: dog1.id, // Associando ao primeiro cachorro
-    },
-  });
-
-  const post5 = await prisma.post.upsert({
-    where: { id: 5 },
-    update: {},
-    create: {
-      title: 'Bella precisa de exercícios',
-      content:
-        'Bella é uma Pastor Alemão jovem e cheia de energia. Ela precisa de uma família ativa que possa proporcionar exercícios regulares.',
-      published: false,
-      postType: 'adoption',
-      authorId: user1.id,
-      dogId: dog4.id,
-    },
-  });
-
-  console.log('✅ Posts criados:', { post1, post2, post3, post4, post5 });
+  console.log('✅ Favoritos criados:', { dogFavorite1, dogFavorite2 });
 
   console.log('🎉 Seed concluído com sucesso!');
   console.log('\n📊 Resumo dos dados criados:');
   console.log(`👥 Usuários: 3`);
   console.log(`🐕 Cachorros: 4 (3 disponíveis, 1 adotado)`);
-  console.log(`📝 Posts: 5 (4 publicados, 1 rascunho)`);
+  console.log(`❤️ Favoritos: 2`);
 }
 
 main()

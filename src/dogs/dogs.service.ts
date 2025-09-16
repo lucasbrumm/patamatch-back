@@ -56,7 +56,7 @@ export class DogsService {
       take,
       cursor,
       where,
-      orderBy,
+      orderBy: orderBy || { createdAt: 'desc' },
       include: {
         owner: {
           select: {
@@ -64,26 +64,109 @@ export class DogsService {
             name: true,
             email: true,
           },
+        },
+        images: {
+          where: {
+            order: 1,
+          },
+          select: {
+            imageData: true,
+            mimeType: true,
+            filename: true,
+          },
+          take: 1,
         },
       },
     });
   }
 
-  async findAvailable(): Promise<Dog[]> {
-    return this.prisma.dog.findMany({
-      where: {
-        isAdopted: false,
-      },
-      include: {
-        owner: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
+  async findAvailablePaginated(
+    page: number = 1,
+    limit: number = 4,
+    userId?: number,
+  ): Promise<{
+    content: any[];
+    pagination: {
+      page: number;
+      limit: number;
+      total: number;
+      totalPages: number;
+      hasNext: boolean;
+      hasPrev: boolean;
+    };
+  }> {
+    const skip = (page - 1) * limit;
+
+    const [dogs, total] = await Promise.all([
+      this.prisma.dog.findMany({
+        where: {
+          isAdopted: false,
+        },
+        include: {
+          owner: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+          images: {
+            where: {
+              order: 1,
+            },
+            select: {
+              imageData: true,
+              mimeType: true,
+              filename: true,
+            },
+            take: 1,
           },
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
+        skip,
+        take: limit,
+      }),
+      this.prisma.dog.count({
+        where: {
+          isAdopted: false,
+        },
+      }),
+    ]);
+
+    let userFavorites: number[] = [];
+    if (userId) {
+      const favorites = await this.prisma.dogFavorite.findMany({
+        where: {
+          userId,
+          isFavorite: true,
+        },
+        select: { dogId: true },
+      });
+      userFavorites = favorites.map((fav) => fav.dogId);
+    }
+
+    const transformedDogs = dogs.map((dog) => ({
+      ...dog,
+      isFavorite: userId ? userFavorites.includes(dog.id) : false,
+      firstImage: dog.images[0] || null,
+      images: undefined,
+    }));
+
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      content: transformedDogs,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+        hasNext: page < totalPages,
+        hasPrev: page > 1,
       },
-    });
+    };
   }
 
   async findByOwner(ownerId: number): Promise<Dog[]> {
@@ -99,6 +182,20 @@ export class DogsService {
             email: true,
           },
         },
+        images: {
+          where: {
+            order: 1,
+          },
+          select: {
+            imageData: true,
+            mimeType: true,
+            filename: true,
+          },
+          take: 1,
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
       },
     });
   }
@@ -148,6 +245,12 @@ export class DogsService {
             email: true,
           },
         },
+        images: {
+          orderBy: {
+            order: 'asc',
+          },
+        },
+        localization: true,
       },
     });
 
