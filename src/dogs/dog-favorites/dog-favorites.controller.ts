@@ -26,11 +26,6 @@ export class DogFavoritesController {
     return this.dogFavoritesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.dogFavoritesService.findOne(id);
-  }
-
   @Get('user/:userId')
   findByUserId(@Param('userId', ParseIntPipe) userId: number) {
     return this.dogFavoritesService.findByUserId(userId);
@@ -49,12 +44,32 @@ export class DogFavoritesController {
     return this.dogFavoritesService.findByUserAndDog(userId, dogId);
   }
 
+  @Get('user/:userId/active')
+  findActiveFavoritesByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.dogFavoritesService.findActiveFavoritesByUserId(userId);
+  }
+
+  @Get('user/:userId/history')
+  findHistoryByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.dogFavoritesService.findHistoryByUserId(userId);
+  }
+
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.dogFavoritesService.findOne(id);
+  }
+
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateDogFavoriteDto: UpdateDogFavoriteDto,
   ) {
     return this.dogFavoritesService.update(id, updateDogFavoriteDto);
+  }
+
+  @Post('toggle')
+  toggleFavorite(@Body() body: { userId: number; dogId: number }) {
+    return this.dogFavoritesService.toggleFavorite(body.userId, body.dogId);
   }
 
   @Delete(':id')

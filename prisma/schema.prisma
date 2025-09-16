@@ -17,28 +17,12 @@ model User {
   id    Int     @default(autoincrement()) @id
   email String  @unique
   name  String?
-  posts Post[]
   dogs  Dog[]
   favoriteDogs DogFavorite[]
 
   @@map("users")
 }
 
-model Post {
-  id          Int      @default(autoincrement()) @id
-  title       String
-  content     String?
-  published   Boolean  @default(false)
-  postType    String   @default("general") @map("post_type") // "adoption", "general", "update"
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  author      User?    @relation(fields: [authorId], references: [id])
-  authorId    Int?     @map("author_id")
-  dog         Dog      @relation(fields: [dogId], references: [id])
-  dogId       Int      @map("dog_id")
-
-  @@map("posts")
-}
 
 model Dog {
   id          Int      @default(autoincrement()) @id
@@ -53,10 +37,9 @@ model Dog {
   updatedAt   DateTime @updatedAt @map("updated_at")
   owner       User?    @relation(fields: [ownerId], references: [id])
   ownerId     Int?     @map("owner_id")
-  posts       Post[]
   images      DogImage[]
-  favoritedBy DogFavorite[]
   localization DogLocalization?
+  favoritedBy DogFavorite[]
 
   @@map("dogs")
 }
@@ -88,13 +71,14 @@ model DogImage {
 }
 
 model DogFavorite {
-  id        Int      @default(autoincrement()) @id
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int      @map("user_id")
-  dog       Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)
-  dogId     Int      @map("dog_id")
+  id         Int      @default(autoincrement()) @id
+  isFavorite Boolean  @default(true) @map("is_favorite")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     Int      @map("user_id")
+  dog        Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)
+  dogId      Int      @map("dog_id")
 
   @@unique([userId, dogId])
   @@map("dog_favorites")

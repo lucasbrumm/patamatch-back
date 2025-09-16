@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  ConflictException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateDogFavoriteDto } from './dto/create-dog-favorite.dto';
 import { UpdateDogFavoriteDto } from './dto/update-dog-favorite.dto';
@@ -21,7 +17,7 @@ export class DogFavoritesService {
       throw new NotFoundException('User not found');
     }
 
-    // Verificar se o dog existe
+    // Verificar se o cachorro existe
     const dog = await this.prisma.dog.findUnique({
       where: { id: createDogFavoriteDto.dogId },
     });
@@ -41,17 +37,42 @@ export class DogFavoritesService {
     });
 
     if (existingFavorite) {
-      throw new ConflictException('Dog is already in favorites');
+      // Se já existe, atualizar o status de isFavorite
+      return this.prisma.dogFavorite.update({
+        where: {
+          userId_dogId: {
+            userId: createDogFavoriteDto.userId,
+            dogId: createDogFavoriteDto.dogId,
+          },
+        },
+        data: {
+          isFavorite: createDogFavoriteDto.isFavorite ?? true,
+        },
+        include: {
+          user: true,
+          dog: {
+            include: {
+              images: true,
+              owner: true,
+              localization: true,
+            },
+          },
+        },
+      });
     }
 
     return this.prisma.dogFavorite.create({
-      data: createDogFavoriteDto,
+      data: {
+        ...createDogFavoriteDto,
+        isFavorite: createDogFavoriteDto.isFavorite ?? true,
+      },
       include: {
         user: true,
         dog: {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -66,6 +87,7 @@ export class DogFavoritesService {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -81,6 +103,7 @@ export class DogFavoritesService {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -111,6 +134,7 @@ export class DogFavoritesService {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -118,7 +142,7 @@ export class DogFavoritesService {
   }
 
   async findByDogId(dogId: number): Promise<any[]> {
-    // Verificar se o dog existe
+    // Verificar se o cachorro existe
     const dog = await this.prisma.dog.findUnique({
       where: { id: dogId },
     });
@@ -135,6 +159,7 @@ export class DogFavoritesService {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -155,6 +180,7 @@ export class DogFavoritesService {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -182,6 +208,7 @@ export class DogFavoritesService {
           include: {
             images: true,
             owner: true,
+            localization: true,
           },
         },
       },
@@ -236,7 +263,7 @@ export class DogFavoritesService {
   }
 
   async removeByDogId(dogId: number): Promise<any> {
-    // Verificar se o dog existe
+    // Verificar se o cachorro existe
     const dog = await this.prisma.dog.findUnique({
       where: { id: dogId },
     });
@@ -247,6 +274,139 @@ export class DogFavoritesService {
 
     return this.prisma.dogFavorite.deleteMany({
       where: { dogId },
+    });
+  }
+
+  // Método para fazer toggle do status de favorito
+  async toggleFavorite(userId: number, dogId: number): Promise<any> {
+    // Verificar se o usuário existe
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    // Verificar se o cachorro existe
+    const dog = await this.prisma.dog.findUnique({
+      where: { id: dogId },
+    });
+
+    if (!dog) {
+      throw new NotFoundException('Dog not found');
+    }
+
+    // Verificar se já existe o favorito
+    const existingFavorite = await this.prisma.dogFavorite.findUnique({
+      where: {
+        userId_dogId: {
+          userId,
+          dogId,
+        },
+      },
+    });
+
+    if (existingFavorite) {
+      // Se já existe, fazer toggle do status
+      return this.prisma.dogFavorite.update({
+        where: {
+          userId_dogId: {
+            userId,
+            dogId,
+          },
+        },
+        data: {
+          isFavorite: !existingFavorite.isFavorite,
+        },
+        include: {
+          user: true,
+          dog: {
+            include: {
+              images: true,
+              owner: true,
+              localization: true,
+            },
+          },
+        },
+      });
+    } else {
+      // Se não existe, criar como favorito
+      return this.prisma.dogFavorite.create({
+        data: {
+          userId,
+          dogId,
+          isFavorite: true,
+        },
+        include: {
+          user: true,
+          dog: {
+            include: {
+              images: true,
+              owner: true,
+              localization: true,
+            },
+          },
+        },
+      });
+    }
+  }
+
+  // Método para buscar apenas favoritos ativos de um usuário
+  async findActiveFavoritesByUserId(userId: number): Promise<any[]> {
+    // Verificar se o usuário existe
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.prisma.dogFavorite.findMany({
+      where: {
+        userId,
+        isFavorite: true,
+      },
+      include: {
+        user: true,
+        dog: {
+          include: {
+            images: true,
+            owner: true,
+            localization: true,
+          },
+        },
+      },
+    });
+  }
+
+  // Método para buscar histórico completo de favoritos de um usuário (incluindo removidos)
+  async findHistoryByUserId(userId: number): Promise<any[]> {
+    // Verificar se o usuário existe
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.prisma.dogFavorite.findMany({
+      where: { userId },
+      include: {
+        user: true,
+        dog: {
+          include: {
+            images: true,
+            owner: true,
+            localization: true,
+          },
+        },
+      },
+      orderBy: {
+        updatedAt: 'desc',
+      },
     });
   }
 }

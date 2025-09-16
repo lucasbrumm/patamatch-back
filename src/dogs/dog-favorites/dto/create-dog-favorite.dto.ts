@@ -1,11 +1,13 @@
-import { IsInt, IsNotEmpty } from 'class-validator';
+import { IsBoolean, IsInt, IsOptional } from 'class-validator';
 
 export class CreateDogFavoriteDto {
   @IsInt()
-  @IsNotEmpty()
   userId: number;
 
   @IsInt()
-  @IsNotEmpty()
   dogId: number;
+
+  @IsOptional()
+  @IsBoolean()
+  isFavorite?: boolean;
 }

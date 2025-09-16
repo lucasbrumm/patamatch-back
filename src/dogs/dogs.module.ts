@@ -3,18 +3,13 @@ import { DogsService } from './dogs.service';
 import { DogsController } from './dogs.controller';
 import { PrismaModule } from '../prisma/prisma.module';
 import { DogImagesModule } from './dog-images/dog-images.module';
-import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
 import { DogLocalizationModule } from './dog-localization/dog-localization.module';
+import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
 
 @Module({
-  imports: [
-    PrismaModule,
-    DogImagesModule,
-    DogFavoritesModule,
-    DogLocalizationModule,
-  ],
+  imports: [PrismaModule, DogImagesModule, DogLocalizationModule, DogFavoritesModule],
   controllers: [DogsController],
   providers: [DogsService],
-  exports: [DogsService, DogImagesModule, DogFavoritesModule, DogLocalizationModule],
+  exports: [DogsService, DogImagesModule, DogLocalizationModule, DogFavoritesModule],
 })
 export class DogsModule {}

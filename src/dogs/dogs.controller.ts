@@ -32,8 +32,20 @@ export class DogsController {
   }
 
   @Get('/available')
-  findAvailable() {
-    return this.dogsService.findAvailable();
+  findAvailablePaginated(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('userId') userId?: string,
+  ) {
+    const pageNum = page ? parseInt(page, 10) : 1;
+    const limitNum = limit ? parseInt(limit, 10) : 4;
+    const userIdNum = userId ? parseInt(userId, 10) : undefined;
+
+    return this.dogsService.findAvailablePaginated(
+      pageNum,
+      limitNum,
+      userIdNum,
+    );
   }
 
   @Get('/owner/:ownerId')
