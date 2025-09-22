@@ -39,6 +39,14 @@ export class CreateDogDto {
   @IsOptional()
   isAdopted?: boolean;
 
+  @IsBoolean()
+  @IsOptional()
+  isVaccinated?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  isCastrated?: boolean;
+
   @IsInt()
   @IsOptional()
   ownerId?: number;
