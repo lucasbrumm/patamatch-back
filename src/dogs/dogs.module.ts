@@ -7,9 +7,19 @@ import { DogLocalizationModule } from './dog-localization/dog-localization.modul
 import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
 
 @Module({
-  imports: [PrismaModule, DogImagesModule, DogLocalizationModule, DogFavoritesModule],
+  imports: [
+    PrismaModule,
+    DogImagesModule,
+    DogLocalizationModule,
+    DogFavoritesModule,
+  ],
   controllers: [DogsController],
   providers: [DogsService],
-  exports: [DogsService, DogImagesModule, DogLocalizationModule, DogFavoritesModule],
+  exports: [
+    DogsService,
+    DogImagesModule,
+    DogLocalizationModule,
+    DogFavoritesModule,
+  ],
 })
 export class DogsModule {}

@@ -245,11 +245,6 @@ export class DogsService {
             email: true,
           },
         },
-        images: {
-          orderBy: {
-            order: 'asc',
-          },
-        },
         localization: true,
       },
     });

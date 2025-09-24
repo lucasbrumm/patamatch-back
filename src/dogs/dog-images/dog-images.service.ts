@@ -7,6 +7,12 @@ import { UpdateDogImageDto } from './dto/update-dog-image.dto';
 export class DogImagesService {
   constructor(private prisma: PrismaService) {}
 
+  async countDogImagesByDogId(dogId: number): Promise<number> {
+    return this.prisma.dogImage.count({
+      where: { dogId },
+    });
+  }
+
   async create(createDogImageDto: CreateDogImageDto): Promise<any> {
     // Verificar se o dog existe
     const dog = await this.prisma.dog.findUnique({

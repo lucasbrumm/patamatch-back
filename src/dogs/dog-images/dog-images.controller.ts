@@ -21,6 +21,11 @@ import { ImageUploadInterceptor } from './interceptors/image-upload.interceptor'
 export class DogImagesController {
   constructor(private readonly dogImagesService: DogImagesService) {}
 
+  @Get('count/:dogId')
+  count(@Param('dogId', ParseIntPipe) dogId: number) {
+    return this.dogImagesService.countDogImagesByDogId(dogId);
+  }
+
   @Post()
   create(@Body() createDogImageDto: CreateDogImageDto) {
     return this.dogImagesService.create(createDogImageDto);

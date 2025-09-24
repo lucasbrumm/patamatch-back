@@ -7,7 +7,6 @@ import { UpdateDogDto } from './dto/update-dog.dto';
 
 describe('DogsService', () => {
   let service: DogsService;
-  let prismaService: PrismaService;
 
   const mockDog = {
     id: 1,
@@ -53,7 +52,6 @@ describe('DogsService', () => {
     }).compile();
 
     service = module.get<DogsService>(DogsService);
-    prismaService = module.get<PrismaService>(PrismaService);
   });
 
   afterEach(() => {
@@ -81,6 +79,7 @@ describe('DogsService', () => {
               email: true,
             },
           },
+          localization: true,
         },
       });
     });
