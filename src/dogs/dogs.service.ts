@@ -51,7 +51,7 @@ export class DogsService {
     orderBy?: Prisma.DogOrderByWithRelationInput;
   }): Promise<Dog[]> {
     const { skip, take, cursor, where, orderBy } = params;
-    return this.prisma.dog.findMany({
+    const dogs = await this.prisma.dog.findMany({
       skip,
       take,
       cursor,
@@ -78,6 +78,13 @@ export class DogsService {
         },
       },
     });
+
+    // Transformar o array de imagens em um único objeto para cada dog
+    return dogs.map((dog) => ({
+      ...dog,
+      image: dog.images.length > 0 ? dog.images[0] : null,
+      images: undefined, // Remover o array de imagens
+    }));
   }
 
   async findAvailablePaginated(
@@ -170,7 +177,7 @@ export class DogsService {
   }
 
   async findByOwner(ownerId: number): Promise<Dog[]> {
-    return this.prisma.dog.findMany({
+    const dogs = await this.prisma.dog.findMany({
       where: {
         ownerId: ownerId,
       },
@@ -198,6 +205,13 @@ export class DogsService {
         createdAt: 'desc',
       },
     });
+
+    // Transformar o array de imagens em um único objeto para cada dog
+    return dogs.map((dog) => ({
+      ...dog,
+      firstImage: dog.images.length > 0 ? dog.images[0] : null,
+      images: undefined, // Remover o array de imagens
+    }));
   }
 
   async create(createDogDto: CreateDogDto): Promise<Dog> {
