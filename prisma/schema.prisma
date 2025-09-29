@@ -20,6 +20,7 @@ model User {
   phone String?
   dogs  Dog[]
   favoriteDogs DogFavorite[]
+  image UserImage?
 
   @@map("users")
 }
@@ -85,4 +86,18 @@ model DogFavorite {
 
   @@unique([userId, dogId])
   @@map("dog_favorites")
+}
+
+model UserImage {
+  id        Int      @default(autoincrement()) @id
+  imageData String   @map("image_data") // Base64 encoded image
+  mimeType  String   @map("mime_type") // e.g., "image/jpeg", "image/png"
+  filename  String?  // Original filename
+  size      Int?     // File size in bytes
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @unique @map("user_id") // One-to-one relationship
+
+  @@map("user_images")
 }
