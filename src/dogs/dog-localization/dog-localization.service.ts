@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateDogLocalizationDto } from './dto/create-dog-localization.dto';
 import { UpdateDogLocalizationDto } from './dto/update-dog-localization.dto';
@@ -7,7 +11,9 @@ import { UpdateDogLocalizationDto } from './dto/update-dog-localization.dto';
 export class DogLocalizationService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createDogLocalizationDto: CreateDogLocalizationDto): Promise<any> {
+  async create(
+    createDogLocalizationDto: CreateDogLocalizationDto,
+  ): Promise<any> {
     // Verificar se o dog existe
     const dog = await this.prisma.dog.findUnique({
       where: { id: createDogLocalizationDto.dogId },
@@ -31,7 +37,6 @@ export class DogLocalizationService {
       include: {
         dog: {
           include: {
-            images: true,
             owner: true,
           },
         },
@@ -72,7 +77,10 @@ export class DogLocalizationService {
     return localization;
   }
 
-  async update(dogId: number, updateDogLocalizationDto: UpdateDogLocalizationDto): Promise<any> {
+  async update(
+    dogId: number,
+    updateDogLocalizationDto: UpdateDogLocalizationDto,
+  ): Promise<any> {
     await this.findOne(dogId);
 
     return this.prisma.dogLocalization.update({
@@ -97,7 +105,11 @@ export class DogLocalizationService {
     });
   }
 
-  async findByRadius(latitude: number, longitude: number, radiusKm: number): Promise<any[]> {
+  async findByRadius(
+    latitude: number,
+    longitude: number,
+    radiusKm: number,
+  ): Promise<any[]> {
     // Buscar localizações dentro do raio especificado
     // Esta é uma implementação simples - em produção, considere usar PostGIS para melhor performance
     const localizations = await this.prisma.dogLocalization.findMany({
@@ -123,7 +135,12 @@ export class DogLocalizationService {
     });
   }
 
-  private calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  private calculateDistance(
+    lat1: number,
+    lon1: number,
+    lat2: number,
+    lon2: number,
+  ): number {
     const R = 6371; // Raio da Terra em km
     const dLat = this.deg2rad(lat2 - lat1);
     const dLon = this.deg2rad(lon2 - lon1);

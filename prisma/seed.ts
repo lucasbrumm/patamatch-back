@@ -12,6 +12,7 @@ async function main() {
     create: {
       email: 'joao@email.com',
       name: 'João Silva',
+      phone: '+55 11 99999-1111',
     },
   });
 
@@ -21,6 +22,7 @@ async function main() {
     create: {
       email: 'maria@email.com',
       name: 'Maria Santos',
+      phone: '+55 11 99999-2222',
     },
   });
 
@@ -30,6 +32,7 @@ async function main() {
     create: {
       email: 'pedro@email.com',
       name: 'Pedro Costa',
+      phone: '+55 11 99999-3333',
     },
   });
 
@@ -48,6 +51,8 @@ async function main() {
       description:
         'Cachorro muito carinhoso e brincalhão. Adora crianças e outros animais.',
       isAdopted: false,
+      isVaccinated: true,
+      isCastrated: false,
       ownerId: user1.id,
     },
   });
@@ -64,6 +69,8 @@ async function main() {
       description:
         'Luna é muito dócil e obediente. Perfeita para famílias com crianças pequenas.',
       isAdopted: false,
+      isVaccinated: true,
+      isCastrated: true,
       ownerId: user2.id,
     },
   });
@@ -80,6 +87,8 @@ async function main() {
       description:
         'Max é calmo e tranquilo. Ideal para apartamentos e pessoas que buscam um companheiro fiel.',
       isAdopted: true,
+      isVaccinated: false,
+      isCastrated: true,
       ownerId: user3.id,
     },
   });
@@ -96,6 +105,8 @@ async function main() {
       description:
         'Bella é jovem e energética. Precisa de espaço para correr e brincar.',
       isAdopted: false,
+      isVaccinated: false,
+      isCastrated: false,
       ownerId: user1.id,
     },
   });

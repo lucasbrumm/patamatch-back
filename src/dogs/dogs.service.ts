@@ -243,6 +243,7 @@ export class DogsService {
             id: true,
             name: true,
             email: true,
+            phone: true,
           },
         },
         localization: true,
