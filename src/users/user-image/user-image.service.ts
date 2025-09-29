@@ -6,7 +6,6 @@ import {
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateUserImageDto } from './dto/create-user-image.dto';
 import { UpdateUserImageDto } from './dto/update-user-image.dto';
-import { UploadUserImageDto } from './dto/upload-user-image.dto';
 
 @Injectable()
 export class UserImageService {

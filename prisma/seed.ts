@@ -86,7 +86,7 @@ async function main() {
       gender: 'male',
       description:
         'Max é calmo e tranquilo. Ideal para apartamentos e pessoas que buscam um companheiro fiel.',
-      isAdopted: true,
+      isAdopted: false,
       isVaccinated: false,
       isCastrated: true,
       ownerId: user3.id,

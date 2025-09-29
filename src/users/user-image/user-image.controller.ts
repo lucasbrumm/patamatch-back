@@ -40,9 +40,19 @@ export class UserImageController {
     return this.userImageService.findOne(id);
   }
 
+  @Get(':id/full')
+  findOneWithData(@Param('id', ParseIntPipe) id: number) {
+    return this.userImageService.findOne(id);
+  }
+
   @Get('user/:userId')
   @UseInterceptors(UserImageUploadInterceptor)
   findByUserId(@Param('userId', ParseIntPipe) userId: number) {
+    return this.userImageService.findByUserId(userId);
+  }
+
+  @Get('user/:userId/full')
+  findByUserIdWithData(@Param('userId', ParseIntPipe) userId: number) {
     return this.userImageService.findByUserId(userId);
   }
 
