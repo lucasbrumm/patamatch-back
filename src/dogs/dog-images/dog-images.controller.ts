@@ -57,6 +57,7 @@ export class DogImagesController {
     @Param('dogId', ParseIntPipe) dogId: number,
     @UploadedFiles() files: Express.Multer.File[],
   ): Promise<{ message: string; images: any[] }> {
+    console.log('uploadMultipleImages');
     const results: any[] = [];
 
     for (const file of files) {

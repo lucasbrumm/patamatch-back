@@ -107,7 +107,7 @@ export class DogsService {
     const [dogs, total] = await Promise.all([
       this.prisma.dog.findMany({
         where: {
-          isAdopted: false,
+          isAvailable: true,
         },
         include: {
           owner: {
@@ -137,7 +137,7 @@ export class DogsService {
       }),
       this.prisma.dog.count({
         where: {
-          isAdopted: false,
+          isAvailable: true,
         },
       }),
     ]);

@@ -35,6 +35,7 @@ model Dog {
   gender      String   // "male", "female"
   description String?
   isAdopted   Boolean  @default(false) @map("is_adopted")
+  isAvailable Boolean  @default(true) @map("is_available")
   isVaccinated Boolean @default(false) @map("is_vaccinated")
   isCastrated  Boolean @default(false) @map("is_castrated")
   createdAt   DateTime @default(now()) @map("created_at")

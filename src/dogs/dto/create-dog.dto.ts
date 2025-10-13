@@ -41,6 +41,10 @@ export class CreateDogDto {
 
   @IsBoolean()
   @IsOptional()
+  isAvailable?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
   isVaccinated?: boolean;
 
   @IsBoolean()
