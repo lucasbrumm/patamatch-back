@@ -5,6 +5,7 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { DogImagesModule } from './dog-images/dog-images.module';
 import { DogLocalizationModule } from './dog-localization/dog-localization.module';
 import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
+import { DogAdoptionsModule } from './dog-adoptions/dog-adoptions.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
     DogImagesModule,
     DogLocalizationModule,
     DogFavoritesModule,
+    DogAdoptionsModule,
   ],
   controllers: [DogsController],
   providers: [DogsService],
@@ -20,6 +22,7 @@ import { DogFavoritesModule } from './dog-favorites/dog-favorites.module';
     DogImagesModule,
     DogLocalizationModule,
     DogFavoritesModule,
+    DogAdoptionsModule,
   ],
 })
 export class DogsModule {}

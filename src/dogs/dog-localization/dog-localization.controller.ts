@@ -21,6 +21,7 @@ export class DogLocalizationController {
 
   @Post()
   create(@Body() createDogLocalizationDto: CreateDogLocalizationDto) {
+    console.log(createDogLocalizationDto);
     return this.dogLocalizationService.create(createDogLocalizationDto);
   }
 

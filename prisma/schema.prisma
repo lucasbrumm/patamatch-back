@@ -20,6 +20,7 @@ model User {
   phone String?
   dogs  Dog[]
   favoriteDogs DogFavorite[]
+  adoptions DogAdoption[]
   image UserImage?
 
   @@map("users")
@@ -45,6 +46,7 @@ model Dog {
   images      DogImage[]
   localization DogLocalization?
   favoritedBy DogFavorite[]
+  adoptions   DogAdoption[]
 
   @@map("dogs")
 }
@@ -101,4 +103,19 @@ model UserImage {
   userId    Int      @unique @map("user_id") // One-to-one relationship
 
   @@map("user_images")
+}
+
+model DogAdoption {
+  id        Int      @default(autoincrement()) @id
+  status    String   // "pending", "approved", "rejected", "completed", "cancelled"
+  notes     String?  // Optional notes about the adoption
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int      @map("user_id")
+  dog       Dog      @relation(fields: [dogId], references: [id], onDelete: Cascade)
+  dogId     Int      @map("dog_id")
+
+  @@unique([userId, dogId])
+  @@map("dog_adoptions")
 }
