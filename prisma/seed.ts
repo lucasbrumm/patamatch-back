@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { dogImages } from './images';
 
 const prisma = new PrismaClient();
 
@@ -146,11 +147,46 @@ async function main() {
 
   console.log('✅ Favoritos criados:', { dogFavorite1, dogFavorite2 });
 
+  // Criar imagens dos cachorros
+  console.log('📸 Criando imagens dos cachorros...');
+
+  const createdImages: Array<{ id: number; dogId: number }> = [];
+  for (const imageData of dogImages) {
+    const dogImage = await prisma.dogImage.create({
+      data: {
+        imageData: imageData.imageData,
+        mimeType: 'image/jpeg',
+        filename: `dog-${imageData.dogId}.jpg`,
+        size: imageData.imageData.length,
+        order: 1,
+        dogId: imageData.dogId,
+      },
+    });
+    createdImages.push(dogImage);
+  }
+
+  console.log(
+    `✅ Imagens criadas: ${createdImages.length} imagens adicionadas`,
+  );
+
+  // Atualizar coverImageId dos cachorros
+  console.log('🖼️ Atualizando imagem de capa dos cachorros...');
+
+  for (const image of createdImages) {
+    await prisma.dog.update({
+      where: { id: image.dogId },
+      data: { coverImageId: image.id },
+    });
+  }
+
+  console.log('✅ Imagens de capa atualizadas');
+
   console.log('🎉 Seed concluído com sucesso!');
   console.log('\n📊 Resumo dos dados criados:');
   console.log(`👥 Usuários: 3`);
-  console.log(`🐕 Cachorros: 4 (3 disponíveis, 1 adotado)`);
+  console.log(`🐕 Cachorros: 4`);
   console.log(`❤️ Favoritos: 2`);
+  console.log(`📸 Imagens: ${createdImages.length}`);
 }
 
 main()
@@ -158,6 +194,4 @@ main()
     console.error('❌ Erro durante o seed:', e);
     process.exit(1);
   })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  .finally(() => void prisma.$disconnect());
