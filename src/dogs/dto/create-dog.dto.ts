@@ -53,5 +53,9 @@ export class CreateDogDto {
 
   @IsInt()
   @IsOptional()
+  coverImageId?: number;
+
+  @IsInt()
+  @IsOptional()
   ownerId?: number;
 }
