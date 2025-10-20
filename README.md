@@ -5,24 +5,30 @@ API REST desenvolvida com NestJS para gerenciar adoção de cachorros, usuários
 ## 🚀 Como Executar
 
 ### Modo Local (Apenas localhost)
+
 ```bash
 npm run start:local
 ```
+
 - **Acesso**: `http://localhost:3000`
 - **Uso**: Desenvolvimento local, apenas sua máquina
 
 ### Modo Rede (Acessível por outros dispositivos)
+
 ```bash
 npm run start:network
 ```
+
 - **Acesso local**: `http://localhost:3000`
 - **Acesso externo**: `http://192.168.0.245:3000`
 - **Uso**: Testes com outros dispositivos na mesma rede
 
 ### Modo Desenvolvimento (Padrão)
+
 ```bash
 npm run start:dev
 ```
+
 - **Acesso**: `http://localhost:3000`
 - **Uso**: Desenvolvimento com hot reload
 
@@ -31,11 +37,13 @@ npm run start:dev
 Para acessar de outros dispositivos na mesma rede:
 
 1. **Descubra seu IP local**:
+
    ```bash
    hostname -I
    ```
 
 2. **Use o IP encontrado**:
+
    - Exemplo: `http://192.168.0.245:3000`
 
 3. **Dispositivos que podem acessar**:
@@ -45,17 +53,18 @@ Para acessar de outros dispositivos na mesma rede:
 
 ## 🔧 Scripts Disponíveis
 
-| Script | Descrição | Host | Uso |
-|--------|-----------|------|-----|
-| `npm run start:local` | Desenvolvimento local | localhost | Apenas sua máquina |
-| `npm run start:network` | Desenvolvimento em rede | 0.0.0.0 | Outros dispositivos |
-| `npm run start:dev` | Desenvolvimento padrão | localhost | Hot reload |
-| `npm run start:prod:local` | Produção local | localhost | Apenas sua máquina |
-| `npm run start:prod:network` | Produção em rede | 0.0.0.0 | Outros dispositivos |
+| Script                       | Descrição               | Host      | Uso                 |
+| ---------------------------- | ----------------------- | --------- | ------------------- |
+| `npm run start:local`        | Desenvolvimento local   | localhost | Apenas sua máquina  |
+| `npm run start:network`      | Desenvolvimento em rede | 0.0.0.0   | Outros dispositivos |
+| `npm run start:dev`          | Desenvolvimento padrão  | localhost | Hot reload          |
+| `npm run start:prod:local`   | Produção local          | localhost | Apenas sua máquina  |
+| `npm run start:prod:network` | Produção em rede        | 0.0.0.0   | Outros dispositivos |
 
 ## 🛠️ Endpoints Disponíveis
 
 ### 👥 Usuários
+
 - `GET /users` - Listar usuários
 - `POST /users` - Criar usuário
 - `GET /users/:id` - Buscar usuário
@@ -63,6 +72,7 @@ Para acessar de outros dispositivos na mesma rede:
 - `DELETE /users/:id` - Deletar usuário
 
 ### 🐕 Cachorros
+
 - `GET /dogs` - Listar cachorros
 - `POST /dogs` - Criar cachorro
 - `GET /dogs/available` - Cachorros disponíveis para adoção
@@ -73,6 +83,7 @@ Para acessar de outros dispositivos na mesma rede:
 - `DELETE /dogs/:id` - Deletar cachorro
 
 ### 📝 Posts
+
 - `GET /posts` - Listar posts
 - `POST /posts` - Criar post
 - `GET /posts/published` - Posts publicados
@@ -92,11 +103,13 @@ O projeto usa PostgreSQL com Prisma ORM. Para configurar:
 ### 1. **Configuração Inicial**
 
 1. **Instalar dependências**:
+
    ```bash
    npm install
    ```
 
 2. **Configurar variável de ambiente**:
+
    ```bash
    echo 'DATABASE_URL="postgresql://postgres:postgres@localhost:5432/patamatch?schema=public"' > .env
    ```
@@ -106,45 +119,79 @@ O projeto usa PostgreSQL com Prisma ORM. Para configurar:
    docker-compose up -d
    ```
 
-4. **Aplicar migrações**:
-   ```bash
-   npx prisma migrate deploy
-   ```
+### 2. **Configurar Prisma**
 
-5. **Gerar cliente Prisma**:
+Execute os comandos na ordem:
+
+1. **Gerar cliente Prisma**:
+
    ```bash
    npx prisma generate
    ```
 
-6. **Popular com dados de teste**:
+   > Gera o Prisma Client a partir do schema. Necessário sempre que o `schema.prisma` é alterado.
+
+2. **Aplicar migrações**:
+
+   ```bash
+   npx prisma migrate deploy
+   ```
+
+   > Aplica todas as migrations pendentes ao banco de dados.
+
+3. **Popular com dados de teste**:
    ```bash
    npm run db:seed
    ```
+   > Popula o banco com dados de exemplo para desenvolvimento.
 
-7. **Iniciar o servidor**:
-   ```bash
-   npm run start:dev
-   ```
+### 3. **Iniciar o Servidor**
 
-### 2. **Verificação da Configuração**
+```bash
+npm run start:dev
+```
+
+### 4. **Verificação da Configuração**
 
 - **Banco de dados**: PostgreSQL rodando na porta 5432
 - **API**: http://localhost:3000
 - **Status**: `curl http://localhost:3000` deve retornar "Hello World!"
 
-### 3. **Dados de Teste**
+### 5. **Dados de Teste**
 
 O banco é populado automaticamente com dados de exemplo:
 
 - **👥 3 Usuários**: João Silva, Maria Santos, Pedro Costa
-- **🐕 4 Cachorros**: Rex (Golden), Luna (Labrador), Max (Bulldog - adotado), Bella (Pastor Alemão)
-- **📝 5 Posts**: 4 publicados (3 adoção, 1 geral), 1 rascunho
+- **🐕 4 Cachorros**: Rex (Golden), Luna (Labrador), Max (Bulldog), Bella (Pastor Alemão)
+- **❤️ 2 Favoritos**: Maria favorita Rex, Pedro favorita Luna
 
-### 4. **Comandos Úteis**
+### 6. **Comandos Úteis do Prisma**
 
 ```bash
+# Gerar Prisma Client (após alterar schema.prisma)
+npx prisma generate
+
+# Aplicar migrations
+npx prisma migrate deploy
+
 # Popular banco com dados de teste
 npm run db:seed
+
+# Abrir Prisma Studio (interface visual do banco)
+npx prisma studio
+
+# Verificar status das migrations
+npx prisma migrate status
+
+# Resolver migration falhada (marcar como aplicada)
+npx prisma migrate resolve --applied MIGRATION_NAME
+```
+
+### 7. **Comandos do Docker**
+
+```bash
+# Iniciar banco de dados
+docker-compose up -d
 
 # Parar o banco de dados
 docker-compose down
@@ -152,9 +199,40 @@ docker-compose down
 # Ver logs do banco
 docker-compose logs postgres
 
-# Resetar banco (cuidado: apaga todos os dados)
+# Resetar banco (⚠️ CUIDADO: apaga todos os dados)
 docker-compose down --volumes
 docker-compose up -d
+npx prisma generate
+npx prisma migrate deploy
+npm run db:seed
+```
+
+### 8. **Troubleshooting**
+
+**Migration falhada?**
+
+```bash
+# Marcar migration como resolvida
+npx prisma migrate resolve --applied MIGRATION_NAME
+
+# Depois, aplicar as demais
+npx prisma migrate deploy
+```
+
+**Schema alterado?**
+
+```bash
+# Sempre regenerar o client
+npx prisma generate
+```
+
+**Banco dessincronizado?**
+
+```bash
+# Resetar completamente (⚠️ perde dados)
+docker-compose down --volumes
+docker-compose up -d
+npx prisma generate
 npx prisma migrate deploy
 npm run db:seed
 ```
@@ -162,6 +240,7 @@ npm run db:seed
 ## 🧪 Testes
 
 ### Testes Automatizados
+
 ```bash
 # Executar todos os testes
 npm test
@@ -210,6 +289,7 @@ curl http://localhost:3000/posts/1            # Post específico
 ## 📞 Suporte
 
 Para dúvidas ou problemas, verifique:
+
 1. Se o banco de dados está rodando
 2. Se a porta 3000 está disponível
 3. Se o firewall não está bloqueando conexões
