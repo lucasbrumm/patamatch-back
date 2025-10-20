@@ -46,6 +46,18 @@ export class DogAdoptionsController {
     return this.dogAdoptionsService.findDogsByUserId(userId);
   }
 
+  @Get('check/user/:userId/dog/:dogId')
+  async hasUserApplied(
+    @Param('userId', ParseIntPipe) userId: number,
+    @Param('dogId', ParseIntPipe) dogId: number,
+  ) {
+    const hasApplied = await this.dogAdoptionsService.hasUserApplied(
+      userId,
+      dogId,
+    );
+    return { hasApplied };
+  }
+
   @Get('user/:userId/dog/:dogId')
   findByUserAndDog(
     @Param('userId', ParseIntPipe) userId: number,
@@ -85,4 +97,3 @@ export class DogAdoptionsController {
     return this.dogAdoptionsService.removeByUserAndDog(userId, dogId);
   }
 }
-

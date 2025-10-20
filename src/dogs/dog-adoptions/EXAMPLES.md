@@ -11,10 +11,11 @@ Content-Type: application/json
 {
   "userId": 1,
   "dogId": 5,
-  "status": "pending",
   "notes": "Gostaria de adotar este cachorro. Tenho experiência com cães e um quintal grande."
 }
 ```
+
+**Nota:** O status é sempre criado como "pending" automaticamente. Não é necessário (nem permitido) enviar o status na criação.
 
 **Resposta:**
 
@@ -188,7 +189,31 @@ Content-Type: application/json
 }
 ```
 
-## 10. Deletar uma Adoção
+## 10. Verificar se Usuário já se Candidatou
+
+```bash
+GET /dog-adoptions/check/user/1/dog/5
+```
+
+**Resposta se o usuário já se candidatou:**
+
+```json
+{
+  "hasApplied": true
+}
+```
+
+**Resposta se o usuário NÃO se candidatou:**
+
+```json
+{
+  "hasApplied": false
+}
+```
+
+**Uso típico:** Útil para exibir botões diferentes no frontend (ex: "Candidatar-se" vs "Já Candidatado").
+
+## 11. Deletar uma Adoção
 
 ```bash
 DELETE /dog-adoptions/1
@@ -202,7 +227,7 @@ DELETE /dog-adoptions/user/1/dog/5
 
 ## Fluxo Típico de Adoção
 
-1. **Usuário solicita adoção**: POST /dog-adoptions (status: "pending")
+1. **Usuário solicita adoção**: POST /dog-adoptions (apenas userId, dogId e notes opcionais - status definido automaticamente como "pending")
 2. **Administrador revisa**: GET /dog-adoptions/status/pending
 3. **Administrador aprova**: PATCH /dog-adoptions/:id (status: "approved")
 4. **Processo de adoção é concluído**: PATCH /dog-adoptions/:id (status: "completed")
@@ -238,3 +263,14 @@ GET /dog-adoptions/user/1
 
 1. Buscar cachorros do usuário: GET /dogs?ownerId=1
 2. Para cada cachorro: GET /dog-adoptions/users-by-dog/:dogId
+
+### Verificar se usuário já se candidatou antes de mostrar botão
+
+Antes de exibir o botão "Candidatar-se" no frontend:
+
+```bash
+GET /dog-adoptions/check/user/1/dog/5
+```
+
+- Se `hasApplied: true` → Mostrar "Já Candidatado" (desabilitado)
+- Se `hasApplied: false` → Mostrar "Candidatar-se à Adoção" (habilitado)

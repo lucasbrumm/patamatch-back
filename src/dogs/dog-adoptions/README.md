@@ -23,8 +23,10 @@ A tabela `dog_adoptions` contém:
 - `createdAt` - Data de criação
 - `updatedAt` - Data de atualização
 
-**Restrições**:
+**Regras de Negócio**:
 
+- Toda nova adoção é criada automaticamente com status "pending"
+- O status só pode ser alterado através do endpoint de atualização (PATCH)
 - Cada par usuário-cachorro pode ter apenas uma adoção (unique constraint)
 - Cascata de deleção: se o usuário ou cachorro for deletado, a adoção também será deletada
 
@@ -57,6 +59,7 @@ A tabela `dog_adoptions` contém:
 
 - `GET /dog-adoptions/users-by-dog/:dogId` - Buscar todos os usuários que tentaram adotar um cachorro específico
 - `GET /dog-adoptions/dogs-by-user/:userId` - Buscar todos os cachorros que um usuário tentou adotar
+- `GET /dog-adoptions/check/user/:userId/dog/:dogId` - Verificar se um usuário já se candidatou para adotar um cachorro (retorna true/false)
 
 ### Deleções Específicas
 
@@ -71,10 +74,11 @@ POST /dog-adoptions
 {
   "userId": 1,
   "dogId": 5,
-  "status": "pending",
   "notes": "Gostaria de adotar este cachorro para minha família"
 }
 ```
+
+**Nota:** O status é sempre definido automaticamente como "pending" na criação. Não é necessário enviar o campo `status`.
 
 ### Atualizar status da adoção
 
@@ -101,4 +105,3 @@ GET /dog-adoptions/users-by-dog/5
 ```
 
 Retorna uma lista de usuários com informações da adoção.
-

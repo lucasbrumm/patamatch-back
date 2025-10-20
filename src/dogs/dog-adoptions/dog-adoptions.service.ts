@@ -47,7 +47,10 @@ export class DogAdoptionsService {
     }
 
     return this.prisma.dogAdoption.create({
-      data: createDogAdoptionDto,
+      data: {
+        ...createDogAdoptionDto,
+        status: 'pending', // Sempre cria como pendente
+      },
       include: {
         user: {
           include: {
@@ -134,7 +137,12 @@ export class DogAdoptionsService {
         },
         dog: {
           include: {
-            images: true,
+            images: {
+              take: 1,
+              orderBy: {
+                id: 'asc',
+              },
+            },
             owner: true,
             localization: true,
           },
@@ -366,5 +374,18 @@ export class DogAdoptionsService {
       },
     });
   }
-}
 
+  // Método para verificar se um usuário já se candidatou para adotar um cachorro
+  async hasUserApplied(userId: number, dogId: number): Promise<boolean> {
+    const adoption = await this.prisma.dogAdoption.findUnique({
+      where: {
+        userId_dogId: {
+          userId,
+          dogId,
+        },
+      },
+    });
+
+    return !!adoption; // Retorna true se existe, false se não existe
+  }
+}
