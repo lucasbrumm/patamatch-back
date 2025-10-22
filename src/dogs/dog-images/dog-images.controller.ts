@@ -10,6 +10,8 @@ import {
   UseInterceptors,
   UploadedFile,
   UploadedFiles,
+  MaxFileSizeValidator,
+  ParseFilePipe,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { DogImagesService } from './dog-images.service';
@@ -35,7 +37,12 @@ export class DogImagesController {
   @UseInterceptors(FileInterceptor('image'), ImageUploadInterceptor)
   async uploadImage(
     @Param('dogId', ParseIntPipe) dogId: number,
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new MaxFileSizeValidator({ maxSize: 5_000_000 })],
+      }),
+    )
+    file: Express.Multer.File,
   ): Promise<any> {
     const base64Data = file.buffer.toString('base64');
     const dataUrl = `data:${file.mimetype};base64,${base64Data}`;
