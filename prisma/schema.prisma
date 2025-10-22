@@ -13,12 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserType {
+  ADOPTER  // Adotante
+  CREATOR  // Criador/Doador
+}
+
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
-  phone String?
-  dogs  Dog[]
+  id       Int      @default(autoincrement()) @id
+  email    String   @unique
+  name     String?
+  phone    String?
+  userType UserType @default(ADOPTER) @map("user_type") // Type of user: adopter or creator
+  dogs     Dog[]
   favoriteDogs DogFavorite[]
   adoptions DogAdoption[]
   image UserImage?

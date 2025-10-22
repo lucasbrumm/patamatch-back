@@ -14,6 +14,7 @@ async function main() {
       email: 'joao@email.com',
       name: 'João Silva',
       phone: '+55 11 99999-1111',
+      userType: 'CREATOR', // João é um criador/doador
     },
   });
 
@@ -24,6 +25,7 @@ async function main() {
       email: 'maria@email.com',
       name: 'Maria Santos',
       phone: '+55 11 99999-2222',
+      userType: 'ADOPTER', // Maria é uma adotante
     },
   });
 
@@ -34,6 +36,7 @@ async function main() {
       email: 'pedro@email.com',
       name: 'Pedro Costa',
       phone: '+55 11 99999-3333',
+      userType: 'CREATOR', // Pedro é um criador/doador
     },
   });
 
