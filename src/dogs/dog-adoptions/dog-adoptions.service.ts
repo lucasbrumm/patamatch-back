@@ -51,20 +51,6 @@ export class DogAdoptionsService {
         ...createDogAdoptionDto,
         status: 'pending', // Sempre cria como pendente
       },
-      include: {
-        user: {
-          include: {
-            image: true,
-          },
-        },
-        dog: {
-          include: {
-            images: true,
-            owner: true,
-            localization: true,
-          },
-        },
-      },
     });
   }
 
@@ -268,20 +254,6 @@ export class DogAdoptionsService {
         userId_dogId: {
           userId,
           dogId,
-        },
-      },
-      include: {
-        user: {
-          include: {
-            image: true,
-          },
-        },
-        dog: {
-          include: {
-            images: true,
-            owner: true,
-            localization: true,
-          },
         },
       },
     });

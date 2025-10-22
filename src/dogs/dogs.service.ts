@@ -128,6 +128,7 @@ export class DogsService {
             },
             take: 1,
           },
+          localization: true,
         },
         orderBy: {
           createdAt: 'desc',

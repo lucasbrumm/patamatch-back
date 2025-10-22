@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { dogImages } from './images';
+import { dogImages, userImages } from './images';
+import { dogLocalizations } from './localizations';
 
 const prisma = new PrismaClient();
 
@@ -42,6 +43,29 @@ async function main() {
 
   console.log('✅ Usuários criados:', { user1, user2, user3 });
 
+  console.log('Adicionando imagem de perfil do usuário 1');
+  await prisma.userImage.create({
+    data: {
+      userId: user1.id,
+      imageData: userImages[0].imageData,
+      mimeType: userImages[0].mimeType,
+      filename: userImages[0].filename,
+      size: userImages[0].size,
+    },
+  });
+  console.log('✅ Imagem de perfil do usuário 1 adicionada');
+
+  console.log('Adicionando imagem de perfil do usuário 2');
+  await prisma.userImage.create({
+    data: {
+      userId: user2.id,
+      imageData: userImages[1].imageData,
+      mimeType: userImages[1].mimeType,
+      filename: userImages[1].filename,
+      size: userImages[1].size,
+    },
+  });
+  console.log('✅ Imagem de perfil do usuário 2 adicionada');
   // Criar cachorros de teste
   const dog1 = await prisma.dog.upsert({
     where: { id: 1 },
@@ -115,7 +139,24 @@ async function main() {
     },
   });
 
-  console.log('✅ Cachorros criados:', { dog1, dog2, dog3, dog4 });
+  const dog5 = await prisma.dog.upsert({
+    where: { id: 5 },
+    update: {},
+    create: {
+      name: 'Rufus',
+      breed: 'Fila',
+      age: 6,
+      size: 'large',
+      gender: 'male',
+      description: 'Cachorro para cuidar de fazenda e proteger a propriedade.',
+      isAdopted: false,
+      isVaccinated: true,
+      isCastrated: true,
+      ownerId: user3.id,
+    },
+  });
+
+  console.log('✅ Cachorros criados:', { dog1, dog2, dog3, dog4, dog5 });
 
   // Criar favoritos de teste
   const dogFavorite1 = await prisma.dogFavorite.upsert({
@@ -172,17 +213,23 @@ async function main() {
     `✅ Imagens criadas: ${createdImages.length} imagens adicionadas`,
   );
 
-  // Atualizar coverImageId dos cachorros
-  console.log('🖼️ Atualizando imagem de capa dos cachorros...');
+  console.log('Criando localização dos cachorros...');
 
-  for (const image of createdImages) {
-    await prisma.dog.update({
-      where: { id: image.dogId },
-      data: { coverImageId: image.id },
+  const createdLocalizations: any[] = [];
+  for (const localization of dogLocalizations) {
+    const dogLocalization = await prisma.dogLocalization.create({
+      data: {
+        dogId: localization.dogId,
+        latitude: localization.latitude,
+        longitude: localization.longitude,
+      },
     });
+    createdLocalizations.push(dogLocalization);
   }
 
-  console.log('✅ Imagens de capa atualizadas');
+  console.log(
+    `✅ Localizações criadas: ${createdLocalizations.length} localizações adicionadas`,
+  );
 
   console.log('🎉 Seed concluído com sucesso!');
   console.log('\n📊 Resumo dos dados criados:');
