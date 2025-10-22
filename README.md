@@ -116,7 +116,7 @@ O projeto usa PostgreSQL com Prisma ORM. Para configurar:
 
 3. **Iniciar banco de dados com Docker**:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 ### 2. **Configurar Prisma**
@@ -191,17 +191,17 @@ npx prisma migrate resolve --applied MIGRATION_NAME
 
 ```bash
 # Iniciar banco de dados
-docker-compose up -d
+docker compose up -d
 
 # Parar o banco de dados
-docker-compose down
+docker compose down
 
 # Ver logs do banco
-docker-compose logs postgres
+docker compose logs postgres
 
 # Resetar banco (⚠️ CUIDADO: apaga todos os dados)
-docker-compose down --volumes
-docker-compose up -d
+docker compose down --volumes
+docker compose up -d
 npx prisma generate
 npx prisma migrate deploy
 npm run db:seed
@@ -230,8 +230,8 @@ npx prisma generate
 
 ```bash
 # Resetar completamente (⚠️ perde dados)
-docker-compose down --volumes
-docker-compose up -d
+docker compose down --volumes
+docker compose up -d
 npx prisma generate
 npx prisma migrate deploy
 npm run db:seed

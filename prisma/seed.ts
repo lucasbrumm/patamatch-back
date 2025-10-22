@@ -75,7 +75,7 @@ async function main() {
       isAdopted: false,
       isVaccinated: true,
       isCastrated: true,
-      ownerId: user2.id,
+      ownerId: user1.id,
     },
   });
 
@@ -111,7 +111,7 @@ async function main() {
       isAdopted: false,
       isVaccinated: false,
       isCastrated: false,
-      ownerId: user1.id,
+      ownerId: user3.id,
     },
   });
 
