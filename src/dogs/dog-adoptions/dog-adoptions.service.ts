@@ -3,8 +3,12 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
+import { DogAdoption } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
-import { CreateDogAdoptionDto } from './dto/create-dog-adoption.dto';
+import {
+  CreateDogAdoptionDto,
+  AdoptionStatus,
+} from './dto/create-dog-adoption.dto';
 import { UpdateDogAdoptionDto } from './dto/update-dog-adoption.dto';
 
 @Injectable()
@@ -293,7 +297,15 @@ export class DogAdoptionsService {
     id: number,
     updateDogAdoptionDto: UpdateDogAdoptionDto,
   ): Promise<any> {
-    await this.findOne(id);
+    const adoption = (await this.findOne(id)) as DogAdoption;
+
+    // Se o status está sendo alterado para 'completed', marcar o cachorro como indisponível
+    if (updateDogAdoptionDto.status === AdoptionStatus.COMPLETED) {
+      await this.prisma.dog.update({
+        where: { id: adoption.dogId },
+        data: { isAvailable: false, isAdopted: true },
+      });
+    }
 
     return this.prisma.dogAdoption.update({
       where: { id },
