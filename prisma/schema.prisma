@@ -13,12 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserType {
+  ADOPTER  // Adotante
+  CREATOR  // Criador/Doador
+}
+
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
-  phone String?
-  dogs  Dog[]
+  id       Int      @default(autoincrement()) @id
+  email    String   @unique
+  name     String?
+  phone    String?
+  userType UserType @default(ADOPTER) @map("user_type") // Type of user: adopter or creator
+  dogs     Dog[]
   favoriteDogs DogFavorite[]
   adoptions DogAdoption[]
   image UserImage?
@@ -28,25 +34,26 @@ model User {
 
 
 model Dog {
-  id          Int      @default(autoincrement()) @id
-  name        String
-  breed       String
-  age         Int
-  size        String   // "small", "medium", "large"
-  gender      String   // "male", "female"
-  description String?
-  isAdopted   Boolean  @default(false) @map("is_adopted")
-  isAvailable Boolean  @default(true) @map("is_available")
-  isVaccinated Boolean @default(false) @map("is_vaccinated")
-  isCastrated  Boolean @default(false) @map("is_castrated")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  owner       User?    @relation(fields: [ownerId], references: [id])
-  ownerId     Int?     @map("owner_id")
-  images      DogImage[]
+  id           Int      @default(autoincrement()) @id
+  name         String
+  breed        String
+  age          Int
+  size         String   // "small", "medium", "large"
+  gender       String   // "male", "female"
+  description  String?
+  isAdopted    Boolean  @default(false) @map("is_adopted")
+  isAvailable  Boolean  @default(true) @map("is_available")
+  isVaccinated Boolean  @default(false) @map("is_vaccinated")
+  isCastrated  Boolean  @default(false) @map("is_castrated")
+  coverImageId Int?     @map("cover_image_id") // ID of the cover image to display
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  owner        User?    @relation(fields: [ownerId], references: [id])
+  ownerId      Int?     @map("owner_id")
+  images       DogImage[]
   localization DogLocalization?
-  favoritedBy DogFavorite[]
-  adoptions   DogAdoption[]
+  favoritedBy  DogFavorite[]
+  adoptions    DogAdoption[]
 
   @@map("dogs")
 }
